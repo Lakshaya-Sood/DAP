@@ -91,6 +91,15 @@ const myConst = {
             FETCH_TOURS_LIST_URL: 'http://localhost:3000/toursList',
             FECH_TOUR_STEP_DEFINATION: 'http://localhost:3000/stepsData'
         }
+    },
+    writeScriptToFile: ( path, scriptString, next ) => {
+      fs = require('fs');
+      fs.writeFile(path, scriptString, function(err) {
+          if(err) {
+              return next(err)
+          }
+          next(null, path);
+      }); 
     }
 }
 
