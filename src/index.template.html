@@ -18,6 +18,25 @@
                 </ul>
             </p>
         </div>
+        <script>
+            function script(url) {
+                return new Promise(function( resolve, reject ){
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = url;
+                    s.onload = function(){
+                        console.log("index loaded")
+                        resolve()
+                    }
+                    var x = document.getElementsByTagName('script')[0];
+                    x.parentNode.insertBefore(s, x);
+                })
+            }
+            script('http://localhost:7777/GreetingApp/index.js').then(function(){
+                // add code here after index
+            })
+        </script>
         <!--script src='./main.bundle.js'></script-->
     </body>
 </html>

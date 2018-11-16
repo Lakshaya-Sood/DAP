@@ -6,14 +6,17 @@ import TourManager from './TourManager';
 let managerobj = new TourManager();
 
 function fetchToursList(){
-    return axios.get( window.myAppsConfig.FETCH_TOURS_LIST_URL )
-        .then( response => {
-            return response.data
-        })
-        .catch( err => {
-            console.log(err);
-            return [{}];
-        })
+    return new Promise((resolve,reject)=>{
+        resolve(window.appConfig.tours)
+    })
+    // return axios.get( window.myAppsConfig.FETCH_TOURS_LIST_URL )
+    //     .then( response => {
+    //         return response.data
+    //     })
+    //     .catch( err => {
+    //         console.log(err);
+    //         return [{}];
+    //     })
 }
 
 function connectManager( tourName ) {

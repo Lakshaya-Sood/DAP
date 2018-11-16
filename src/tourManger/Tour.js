@@ -10,7 +10,7 @@ export default class Tour {
 
     start() {
         //fetch steps json here
-        axios.get( window.myAppsConfig.FECH_TOUR_STEP_DEFINATION + '/' + this.stepDefURI )
+        axios.get( window.myAppsConfig.FETCH_TOUR_STEP_DEFINATION + '/' + this.stepDefURI )
         .then( response => {
             this.stepData = response.data;
             hopscotch.startTour(this.stepData);
