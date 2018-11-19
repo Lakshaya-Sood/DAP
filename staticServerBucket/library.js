@@ -12421,13 +12421,14 @@ function () {
   _createClass(Tour, [{
     key: "start",
     value: function start() {
-      var _this = this;
-
       //fetch steps json here
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(window.myAppsConfig.FETCH_TOUR_STEP_DEFINATION + '/' + this.stepDefURI).then(function (response) {
-        _this.stepData = response.data;
-        hopscotch__WEBPACK_IMPORTED_MODULE_1___default.a.startTour(_this.stepData);
-      });
+      // axios.get( window.myAppsConfig.FETCH_TOUR_STEP_DEFINATION + '/' + this.stepDefURI )
+      // .then( response => {
+      //     this.stepData = response.data;
+      //     hopscotch.startTour(this.stepData);
+      // })
+      this.stepData = window.hopscotchData[this.stepDefURI];
+      hopscotch__WEBPACK_IMPORTED_MODULE_1___default.a.startTour(this.stepData);
     }
   }, {
     key: "stop",
