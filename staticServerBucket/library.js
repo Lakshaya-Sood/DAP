@@ -11277,18 +11277,18 @@ function () {
     }
   }, {
     key: "renderTours",
-    value: function renderTours(data, connectManager) {
+    value: function renderTours(tours, connectManager) {
       var tourObjList = [],
           listHtml = "";
-      data.forEach(function (element) {
-        tourObjList.push(new _Tour__WEBPACK_IMPORTED_MODULE_0__["default"](element.name, element.info));
-        listHtml += "\n                <tr>\n                    <td>".concat(element.name, "</td>\n                    <td id=\"").concat(element.info, "\">").concat(element.info, "</td>\n                </tr>\n            ");
+      tours.forEach(function (tour) {
+        tourObjList.push(new _Tour__WEBPACK_IMPORTED_MODULE_0__["default"](tour.tour_name, tour.tour_id));
+        listHtml += "\n                <tr>\n                    <td>".concat(tour.tour_name, "</td>\n                    <td id=\"").concat(tour.tour_id, "\">Take This Tour</td>\n                </tr>\n            ");
       });
       this.setTours(tourObjList);
       jquery__WEBPACK_IMPORTED_MODULE_1___default()("#tourTable").html("\n                    <table>\n                        <thead>  \n                            <tr>\n                                <th>Name</th>\n                                <th>Steps</th>\n                            </tr>\n                        </thead>\n                        <tbody>\n                            ".concat(listHtml, "\n                        </tbody>\n                    </table>\n                "));
-      data.forEach(function (element) {
-        jquery__WEBPACK_IMPORTED_MODULE_1___default()('#' + element.info).on("click", function () {
-          return connectManager(element.name);
+      tours.forEach(function (tour) {
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()('#' + tour.tour_id).on("click", function () {
+          return connectManager(tour.tour_name);
         });
       });
     }
@@ -11331,8 +11331,8 @@ function connectManager(tourName) {
 }
 
 function displayToursList() {
-  fetchToursList().then(function (data) {
-    managerobj.renderTours(data, connectManager);
+  fetchToursList().then(function (tours) {
+    managerobj.renderTours(tours, connectManager);
   });
 }
 

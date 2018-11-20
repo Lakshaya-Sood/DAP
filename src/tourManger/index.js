@@ -17,8 +17,8 @@ function connectManager( tourName ) {
 }
 
 function displayToursList() {
-    fetchToursList().then( data => {
-        managerobj.renderTours( data, connectManager )
+    fetchToursList().then( tours => {
+        managerobj.renderTours( tours, connectManager )
     });
 }
 

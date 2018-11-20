@@ -16,17 +16,17 @@ export default class TourManager {
         tourObject.start()
     }
 
-    renderTours( data, connectManager ){
+    renderTours( tours, connectManager ){
         let tourObjList = [],
             listHtml = "";
         
-        data.forEach( element => {
-            tourObjList.push(new Tour(element.name,element.info))
+        tours.forEach( tour => {
+            tourObjList.push(new Tour(tour.tour_name,tour.tour_id))
 
             listHtml += `
                 <tr>
-                    <td>${element.name}</td>
-                    <td id="${element.info}">${element.info}</td>
+                    <td>${tour.tour_name}</td>
+                    <td id="${tour.tour_id}">Take This Tour</td>
                 </tr>
             `
         });
@@ -47,8 +47,8 @@ export default class TourManager {
                     </table>
                 `)
             
-        data.forEach( element => {
-            $('#'+element.info).on("click", () => connectManager(element.name));
+        tours.forEach( tour => {
+            $('#'+tour.tour_id).on("click", () => connectManager(tour.tour_name));
         })    
     }
 }
