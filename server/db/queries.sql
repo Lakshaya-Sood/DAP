@@ -88,7 +88,7 @@ INSERT INTO tour VALUES (uuid_generate_v4(),'Third Tour','
                 "placement": "bottom",
                 "title": "Aurora Northen Lights Image",
                 "content": "Can be seen in the high-latitude regions."
-            },
+            }
         ]
     }'
 );
