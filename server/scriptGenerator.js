@@ -1,15 +1,8 @@
 const serverConst = require('./serverConst');
 
-//for now these app specfic tourlist and their step defination is being fetched from a constant file
-// in future it is expected to be feched from app's DB :)
-//-----future change-------
-const appData = require('./appSpecificData');
-//------------
-
-
 const funcGenForApp = {
     generateIndexScript: ( appId ) => {
-        return `var FETCH_CONFIG_URL = 'http://localhost:7777/GreetingApp/config.js';
+        return `var FETCH_CONFIG_URL = '${serverConst.STATIC_FILE_SERVER_URL}/${appId}/config.js';
         function script(url) {
             return new Promise(function( resolve, reject ){
                 var s = document.createElement('script');
@@ -32,19 +25,26 @@ const funcGenForApp = {
             })
         })`
     },
-    generateConfigScript: ( appId ) => {
+    generateConfigScript: ( appId, toursData ) => {
         return `
         window.appConfig = {
             libraryLink : "${serverConst.STATIC_FILE_SERVER_URL}/library.js",
-            tours : ${JSON.stringify(appData[appId].tours)},
+            tours : ${JSON.stringify(
+                toursData.map(ele => {
+                    return {
+                        tour_id: ele.tour_id,
+                        tour_name: ele.tour_name
+                    }
+                })
+            )},
             rootFolderLink: "${serverConst.STATIC_FILE_SERVER_URL}/${appId}/"
         }
         `
     },
-    generateDataScriptAndPath: ( appId, scriptsStringObj, pathjson ) => {
-        Object.keys(appData[appId].hopscotchData).forEach(function(ele){
-            scriptsStringObj[ele] = `window.${ele} = ${JSON.stringify(appData[appId].hopscotchData[ele])}`
-            pathjson[ele] = `${serverConst.parentPath + appId}/tour.${ele}.js`
+    generateDataScriptAndPath: ( appDetails, scriptsStringObj, pathjson ) => {
+        appDetails.toursData.forEach(function(ele){
+            scriptsStringObj[ele.tour_id] = `window["${ele.tour_id}"] = ${JSON.stringify(ele.steps)}`
+            pathjson[ele.tour_id] = `${serverConst.parentPath + appDetails.app_id}/tour.${ele.tour_id}.js`
         })
     }
 }

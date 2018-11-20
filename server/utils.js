@@ -1,20 +1,27 @@
 const funcGenForApp = require('./scriptGenerator'),
     serverConst = require('./serverConst');
+    dbUtils = require('./db/index.js');
 
-const fs = require('fs');
+const fs = require('fs'),
+    mkdirp = require('mkdirp');
 
 const utils = {
-    writeScriptToFile: ( path, scriptString ) => {
+    writeScriptToFile: ( path, scriptString, folderPath ) => {
         return new Promise((resolve, reject) => {
-            fs.writeFile(path, scriptString, function( err ) {
-                err ? reject(err) : resolve(null, path);
-            }); 
+            mkdirp(folderPath, function(err) {
+                if(err){
+                    reject(err)
+                }
+                fs.writeFile(path, scriptString, function( err ) {
+                    err ? reject(err) : resolve(null, path);
+                }); 
+            });
         })
     },
-    generateScriptsStrings: ( appId ) => {
+    generateScriptsStrings: ( appDetails ) => {
         return {
-            "indexjsString": funcGenForApp.generateIndexScript( appId ),
-            "configjsString": funcGenForApp.generateConfigScript( appId )
+            "indexjsString": funcGenForApp.generateIndexScript( appDetails.app_id ),
+            "configjsString": funcGenForApp.generateConfigScript( appDetails.app_id, appDetails.toursData )
         }
     },
     getPathForSaveFile: ( appId ) => {
@@ -24,16 +31,17 @@ const utils = {
             "configjsString": folderpath + serverConst.configjsPath
         }
     },
-    writeScriptsStringToFiles: ( scriptsStringObj, appId ) => {
+    writeScriptsStringToFiles: ( scriptsStringObj, appDetails ) => {
         return new Promise((resolve, reject) => {
             let promiseArray = [],
-                pathjson = utils.getPathForSaveFile( appId )
+                pathjson = utils.getPathForSaveFile( appDetails.app_id ),
+                folderPath = serverConst.parentPath + appDetails.app_id;
             
             //to add tour step defination file content and file path
-            funcGenForApp.generateDataScriptAndPath( appId, scriptsStringObj, pathjson )
+            funcGenForApp.generateDataScriptAndPath( appDetails, scriptsStringObj, pathjson )
 
             Object.keys(scriptsStringObj).forEach(( key ) => {
-                let eachPromise = utils.writeScriptToFile( pathjson[key], scriptsStringObj[key])
+                let eachPromise = utils.writeScriptToFile( pathjson[key], scriptsStringObj[key], folderPath)
                 promiseArray.push(eachPromise)
             })
             
@@ -41,9 +49,32 @@ const utils = {
             .then(()=>{
                 resolve()
             })
-            .catch(()=>{
-                reject()
+            .catch( err => {
+                reject( err )
             })
+        })
+    },
+    fetchDataFromDB: ( appName ) => {
+        return new Promise((resolve,reject) => {
+            dbUtils.fetchApplicationRecordFromDB(appName)
+            .then(data => {
+                let appRecord = data[0],
+                    promiseArr = []
+        
+                appRecord.tours.forEach( tourId => {
+                    let eachPromise = dbUtils.fetchTourRecordFromDB( tourId );
+                    promiseArr.push( eachPromise )
+                });
+        
+                Promise.all( promiseArr )
+                .then( data => {
+                    toursData = data.map( ele => ele[0])
+                    appRecord.toursData = toursData
+                    resolve(appRecord)
+                })
+                .catch( err => reject(err))
+            })
+            .catch( err => reject(err))
         })
     }
 }

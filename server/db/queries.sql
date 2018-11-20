@@ -1,8 +1,10 @@
+-- INSTALLING UUID PG EXTENTION
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- APPLICATION TABLE CREATE
 CREATE TABLE application(
  app_id uuid DEFAULT uuid_generate_v4(),
  app_name VARCHAR (20) NOT NULL,
- tours json NOT NULL
+ tours text[] NOT NULL
 );
 
 -- TOUR TABLE CREATE
