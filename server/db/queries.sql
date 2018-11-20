@@ -86,9 +86,9 @@ INSERT INTO tour VALUES (uuid_generate_v4(),'Third Tour','
             {
                 "target": "aurora",
                 "placement": "bottom",
-                "title": "Your inbox",
-                "content": "Messages from other users will appear here."
-            }
+                "title": "Aurora Northen Lights Image",
+                "content": "Can be seen in the high-latitude regions."
+            },
         ]
     }'
 );
