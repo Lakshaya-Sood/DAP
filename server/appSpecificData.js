@@ -86,9 +86,7 @@ const AppSpecificData = {
             }
           ]
       }
-    },
-    FETCH_TOURS_LIST_URL: 'http://localhost:3000/toursList',
-    FECH_TOUR_STEP_DEFINATION: 'http://localhost:3000/stepsData'
+    }
   }
 }
 
