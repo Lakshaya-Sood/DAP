@@ -1,5 +1,4 @@
 import $ from "jquery";
-import axios from 'axios';
 
 import TourManager from './TourManager';
 
@@ -9,14 +8,6 @@ function fetchToursList(){
     return new Promise((resolve,reject)=>{
         resolve(window.appConfig.tours)
     })
-    // return axios.get( window.myAppsConfig.FETCH_TOURS_LIST_URL )
-    //     .then( response => {
-    //         return response.data
-    //     })
-    //     .catch( err => {
-    //         console.log(err);
-    //         return [{}];
-    //     })
 }
 
 function connectManager( tourName ) {

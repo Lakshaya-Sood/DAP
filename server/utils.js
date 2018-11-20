@@ -14,26 +14,23 @@ const utils = {
     generateScriptsStrings: ( appId ) => {
         return {
             "indexjsString": funcGenForApp.generateIndexScript( appId ),
-            "configjsString": funcGenForApp.generateConfigScript( appId ),
-            "libjsString": funcGenForApp.generateLibraryScript( appId ),
-            "tourManagerjsString": funcGenForApp.generateTourMangerScript( appId ),
-            "dataString": funcGenForApp.generateDataScript( appId )
+            "configjsString": funcGenForApp.generateConfigScript( appId )
         }
     },
     getPathForSaveFile: ( appId ) => {
         let folderpath = serverConst.parentPath + appId;
         return {
             "indexjsString": folderpath + serverConst.indexjsPath,
-            "configjsString": folderpath + serverConst.configjsPath,
-            "libjsString": folderpath + serverConst.libjsPath,
-            "tourManagerjsString": folderpath + serverConst.tourMangerjsPath,
-            "dataString": folderpath + serverConst.datajsPath,
+            "configjsString": folderpath + serverConst.configjsPath
         }
     },
     writeScriptsStringToFiles: ( scriptsStringObj, appId ) => {
         return new Promise((resolve, reject) => {
             let promiseArray = [],
                 pathjson = utils.getPathForSaveFile( appId )
+            
+            //to add tour step defination file content and file path
+            funcGenForApp.generateDataScriptAndPath( appId, scriptsStringObj, pathjson )
 
             Object.keys(scriptsStringObj).forEach(( key ) => {
                 let eachPromise = utils.writeScriptToFile( pathjson[key], scriptsStringObj[key])

@@ -18,9 +18,5 @@ var FETCH_CONFIG_URL = 'http://localhost:7777/GreetingApp/config.js';
             script(window.appConfig.libraryLink)
             .then(function(){
                 console.log('lib loaded')
-                script(window.appConfig.stepdefinationLink).
-                then(function(){
-                    console.log('hopscoptch data loaded');
-                })
             })
         })

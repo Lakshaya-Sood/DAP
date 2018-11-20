@@ -36,23 +36,17 @@ const funcGenForApp = {
         return `
         window.appConfig = {
             libraryLink : "${serverConst.STATIC_FILE_SERVER_URL}/library.js",
-            tours : ${JSON.stringify(appData[appId].tours)}
+            tours : ${JSON.stringify(appData[appId].tours)},
+            rootFolderLink: "${serverConst.STATIC_FILE_SERVER_URL}/${appId}/"
         }
         `
     },
-    generateLibraryScript: ( appId ) => {
-        return ``
-    },
-    generateTourMangerScript: ( appId ) => {
-        return ``
-    },
-    generateDataScript: ( appId ) => {
-        return `
-        const hopscotchData = ${JSON.stringify(appData[appId].hopscotchData)}
-        module.export = hopscotchData
-        `
-    } 
-
+    generateDataScriptAndPath: ( appId, scriptsStringObj, pathjson ) => {
+        Object.keys(appData[appId].hopscotchData).forEach(function(ele){
+            scriptsStringObj[ele] = `window.${ele} = ${JSON.stringify(appData[appId].hopscotchData[ele])}`
+            pathjson[ele] = `${serverConst.parentPath + appId}/tour.${ele}.js`
+        })
+    }
 }
 
 

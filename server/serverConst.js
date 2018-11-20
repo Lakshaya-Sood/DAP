@@ -5,7 +5,7 @@ const serverConst = {
     configjsPath: '/config.js',
     libjsPath: '/lib.js',
     tourMangerjsPath: '/tourManager.js',
-    datajsPath: '/data.js'
+    //datajsPath: '/data.js'
 }
 
 module.exports = serverConst;
