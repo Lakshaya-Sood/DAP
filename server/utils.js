@@ -54,9 +54,9 @@ const utils = {
             })
         })
     },
-    fetchDataFromDB: ( appName ) => {
+    fetchDataFromDB: ( appId ) => {
         return new Promise((resolve,reject) => {
-            dbUtils.fetchApplicationRecordFromDB(appName)
+            dbUtils.fetchApplicationRecordFromDB(appId)
             .then(data => {
                 let appRecord = data[0],
                     promiseArr = []

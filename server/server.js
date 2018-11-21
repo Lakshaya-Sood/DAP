@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
 app.post('/publishScripts', ( req, res ) => {
-    utils.fetchDataFromDB( req.body.appName )
+    utils.fetchDataFromDB( req.body.appId )
     .then( appDetails => {
         let scriptsStringObj = utils.generateScriptsStrings( appDetails );
         

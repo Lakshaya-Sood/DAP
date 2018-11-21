@@ -1,8 +1,8 @@
 const db = require("./dbConnection");
 
 const dbUtils = {
-  fetchApplicationRecordFromDB: ( appName ) => {
-    return db.any(`SELECT * FROM application WHERE app_name = '${appName}'`)
+  fetchApplicationRecordFromDB: ( appId ) => {
+    return db.any(`SELECT * FROM application WHERE app_id = '${appId}'`)
   },
   fetchTourRecordFromDB: ( tourId ) => {
     return db.any(`SELECT * FROM tour WHERE tour_id = '${tourId}'`)

@@ -25,28 +25,35 @@ export default class TourManager {
 
             listHtml += `
                 <tr>
-                    <td>${tour.tour_name}</td>
-                    <td id="${tour.tour_id}">Take This Tour</td>
+                    <td id="${tour.tour_id}">${tour.tour_name}</td>
                 </tr>
             `
         });
 
         this.setTours( tourObjList )
          
-        $("#tourTable").html(`
-                    <table>
-                        <thead>  
-                            <tr>
-                                <th>Name</th>
-                                <th>Steps</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${listHtml}
-                        </tbody>
-                    </table>
+        $("body").append(`
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <span id="closeBtn" class="close">&times;</span>
+                            <table>
+                                <thead>  
+                                    <tr>
+                                        <th>Select Tours from following</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${listHtml}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 `)
-            
+        
+        $('#closeBtn').on("click",() => {
+            $('#myModal').css({'display': 'none'})
+        })
+
         tours.forEach( tour => {
             $('#'+tour.tour_id).on("click", () => connectManager(tour.tour_name));
         })    

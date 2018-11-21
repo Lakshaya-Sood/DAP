@@ -11282,10 +11282,15 @@ function () {
           listHtml = "";
       tours.forEach(function (tour) {
         tourObjList.push(new _Tour__WEBPACK_IMPORTED_MODULE_0__["default"](tour.tour_name, tour.tour_id));
-        listHtml += "\n                <tr>\n                    <td>".concat(tour.tour_name, "</td>\n                    <td id=\"").concat(tour.tour_id, "\">Take This Tour</td>\n                </tr>\n            ");
+        listHtml += "\n                <tr>\n                    <td id=\"".concat(tour.tour_id, "\">").concat(tour.tour_name, "</td>\n                </tr>\n            ");
       });
       this.setTours(tourObjList);
-      jquery__WEBPACK_IMPORTED_MODULE_1___default()("#tourTable").html("\n                    <table>\n                        <thead>  \n                            <tr>\n                                <th>Name</th>\n                                <th>Steps</th>\n                            </tr>\n                        </thead>\n                        <tbody>\n                            ".concat(listHtml, "\n                        </tbody>\n                    </table>\n                "));
+      jquery__WEBPACK_IMPORTED_MODULE_1___default()("body").append("\n                    <div id=\"myModal\" class=\"modal\">\n                        <div class=\"modal-content\">\n                            <span id=\"closeBtn\" class=\"close\">&times;</span>\n                            <table>\n                                <thead>  \n                                    <tr>\n                                        <th>Select Tours from following</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    ".concat(listHtml, "\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                "));
+      jquery__WEBPACK_IMPORTED_MODULE_1___default()('#closeBtn').on("click", function () {
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()('#myModal').css({
+          'display': 'none'
+        });
+      });
       tours.forEach(function (tour) {
         jquery__WEBPACK_IMPORTED_MODULE_1___default()('#' + tour.tour_id).on("click", function () {
           return connectManager(tour.tour_name);
@@ -11327,17 +11332,24 @@ function connectManager(tourName) {
   var selectedTourObj = managerobj.tours.filter(function (tour) {
     return tour.name == tourName;
   });
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#myModal').css({
+    'display': 'none'
+  });
   managerobj.setCurrentTour(selectedTourObj[0]);
 }
 
 function displayToursList() {
-  fetchToursList().then(function (tours) {
-    managerobj.renderTours(tours, connectManager);
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#myModal').css({
+    'display': 'block'
   });
 }
 
-jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').append("<button id='tourBttn'>Take Tour</button><div id='tourTable'></div>");
+jquery__WEBPACK_IMPORTED_MODULE_0___default()('head').append("\n    <style>\n        /* The Modal (background) */\n        .modal {\n            display: none; /* Hidden by default */\n            position: fixed; /* Stay in place */\n            z-index: 1; /* Sit on top */\n            left: 0;\n            top: 0;\n            width: 100%; /* Full width */\n            height: 100%; /* Full height */\n            overflow: auto; /* Enable scroll if needed */\n            background-color: rgb(0,0,0); /* Fallback color */\n            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n        }\n\n        /* Modal Content/Box */\n        .modal-content {\n            background-color: #fefefe;\n            margin: 15% auto; /* 15% from the top and centered */\n            padding: 20px;\n            border: 1px solid #888;\n            width: 80%; /* Could be more or less, depending on screen size */\n        }\n\n        /* The Close Button */\n        .close {\n            color: #aaa;\n            float: right;\n            font-size: 28px;\n            font-weight: bold;\n        }\n\n        .close:hover,\n        .close:focus {\n            color: black;\n            text-decoration: none;\n            cursor: pointer;\n        }\n    </style>\n");
+jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').append("<button id='tourBttn'>Take Tour</button>");
 jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tourBttn').on("click", displayToursList);
+fetchToursList().then(function (tours) {
+  managerobj.renderTours(tours, connectManager);
+});
 
 /***/ })
 
