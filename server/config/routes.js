@@ -10,10 +10,12 @@ exports.init = function( app ) {
     // application Routes
     app.post('/app', application.insertRecord);
     app.put('/app', application.updateRecord);
+    app.get('/app',application.fetchRecord)
 
     // tour Routes
     app.post('/tour', tour.insertRecord);
     app.put('/tour', tour.updateRecord);
+    app.get('/tour',tour.fetchTours)
 
     // publish script Routes
     app.post('/publish', publisher.publish);
