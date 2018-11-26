@@ -21,6 +21,24 @@ function displayToursList() {
 }  
 $('head').append(`
     <style>
+        #tourBttn {
+            position: fixed;
+            z-index: 9999;
+            bottom: 5px;
+            left: 46%;
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: #f4511e;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 30px;
+            padding: 10px;
+            width: 212px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
         /* The Modal (background) */
         .modal {
             display: none; /* Hidden by default */
@@ -60,7 +78,7 @@ $('head').append(`
         }
     </style>
 `)
-$('body').append(`<button id='tourBttn'>Take Tour</button>`);
+$('body').append(`<button id='tourBttn'>Quick Tour</button>`);
 $('#tourBttn').on( "click", displayToursList);
 
 fetchToursList().then( tours => {

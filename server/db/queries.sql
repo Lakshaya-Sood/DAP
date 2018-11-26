@@ -10,7 +10,7 @@ CREATE TABLE application(
 -- TOUR TABLE CREATE
 CREATE TABLE tour(
  tour_id uuid DEFAULT uuid_generate_v4(),
- tour_name VARCHAR (20) NOT NULL,
+ tour_name VARCHAR (50) NOT NULL,
  steps json NOT NULL
 );
 
@@ -96,8 +96,8 @@ INSERT INTO tour VALUES (uuid_generate_v4(),'Third Tour','
 -- INSERT QUERIES APPLICATION TABLE
 INSERT INTO application VALUES (uuid_generate_v4(),'Greeting App','
     {
-        "ae7ebd32-7459-4ee4-ba0a-9c80a7b839fb",
-        "59ced0af-360e-437c-a670-400fb1a835cc",
-        "156df0a6-2a00-4787-a47c-7a0d84d15c67"
+        "adfff840-3d6b-4b1f-92be-8170b0071d7f",
+        "8c065324-c99c-4250-9440-6c61a3c33d09",
+        "e0f7c6c3-8d8e-4a09-98c9-1709139fc0a5"
     }'
 );

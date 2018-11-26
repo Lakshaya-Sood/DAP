@@ -1,6 +1,6 @@
 var axios = require('axios')
 
-axios.post('http://localhost:3000/publishScripts',{ appId: '11c8a0ee-467e-43a8-a4da-5f81f5b81e55'})
+axios.post('http://localhost:3000/publishScripts',{ appId: '35e83010-c4f8-4895-a5d2-1fe4ec846d03'})
 .then(function(){
     console.log('successfully published')
 })

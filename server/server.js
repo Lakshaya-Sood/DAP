@@ -1,12 +1,22 @@
 const express = require('express')
+
+var config = require('./config/config');
 const app = express()
-const port = 3000
-const bodyParser = require('body-parser');
 
+//Initialize Express
+require('./config/express')(app);
+
+//Initialize Routes
+require('./config/routes').init(app);
+
+//Start the app by listening on <port>
+var port = process.env.PORT || config.port;
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+exports = module.exports = app;
+
+//// below handle
 const utils = require('./utils');
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
 
 app.post('/publishScripts', ( req, res ) => {
     utils.fetchDataFromDB( req.body.appId )
@@ -27,5 +37,3 @@ app.post('/publishScripts', ( req, res ) => {
         res.send( err )
     })
 })
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
