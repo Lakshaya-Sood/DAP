@@ -20,12 +20,12 @@ export default class TourManager {
         let tourObjList = [],
             listHtml = "";
         
-        tours.forEach( tour => {
+        tours.forEach((tour, index) => {
             tourObjList.push(new Tour(tour.tour_name,tour.tour_id))
 
             listHtml += `
                 <tr>
-                    <td id="${tour.tour_id}">${tour.tour_name}</td>
+                    <td id="${tour.tour_id}" style="padding: 15px;cursor:pointer;">${index+1}. ${tour.tour_name}</td>
                 </tr>
             `
         });
@@ -36,13 +36,13 @@ export default class TourManager {
                     <div id="myModal" class="modal">
                         <div class="modal-content">
                             <span id="closeBtn" class="close">&times;</span>
-                            <table>
-                                <thead>  
+                            <table style="width:100%">
+                                <thead style="color: white;background-color: #002D72;font-size:20px">  
                                     <tr>
-                                        <th>Select Tours from following</th>
+                                        <th style="padding: 15px;">Select Tours from following</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody style="font-size:18px">
                                     ${listHtml}
                                 </tbody>
                             </table>
