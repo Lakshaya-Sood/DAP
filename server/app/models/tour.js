@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-        sequelize.define('tour', {
+        var tour = sequelize.define('tour', {
         tour_id: {
             type: DataTypes.UUID, 
             allowNull: false, 
@@ -13,10 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false 
         },
         steps: DataTypes.JSON
-    },
-    {
-        associate: function(models) {
-            tour.belongsTo(models.application);
-        }
     })
+
+    return tour;
   }

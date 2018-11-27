@@ -1,4 +1,4 @@
-const serverConst = require('./serverConst');
+const serverConst = require('../../serverConst');
 
 const funcGenForApp = {
     generateIndexScript: ( appId ) => {

@@ -1,10 +1,11 @@
-const express = require('express')
+var express = require('express');
+var bodyParser = require('body-parser');
 
 var config = require('./config/config');
 const app = express()
 
-//Initialize Express
-require('./config/express')(app);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
 
 //Initialize Routes
 require('./config/routes').init(app);
@@ -14,26 +15,3 @@ var port = process.env.PORT || config.port;
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 exports = module.exports = app;
-
-//// below handle
-const utils = require('./utils');
-
-app.post('/publishScripts', ( req, res ) => {
-    utils.fetchDataFromDB( req.body.appId )
-    .then( appDetails => {
-        let scriptsStringObj = utils.generateScriptsStrings( appDetails );
-        
-        utils.writeScriptsStringToFiles( scriptsStringObj, appDetails )
-        .then( path => {
-            res.send( path );
-        })
-        .catch( err => {
-            console.log(err)
-            res.send( err );
-        })
-    })
-    .catch( err => {
-        console.log(err)
-        res.send( err )
-    })
-})

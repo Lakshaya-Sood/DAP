@@ -1,6 +1,8 @@
 const funcGenForApp = require('./scriptGenerator'),
-    serverConst = require('./serverConst');
-    dbUtils = require('./db/index.js');
+    serverConst = require('../../serverConst');
+
+var application = require('../controllers/application');
+var tour = require('../controllers/tour');
 
 const fs = require('fs'),
     mkdirp = require('mkdirp');
@@ -56,19 +58,20 @@ const utils = {
     },
     fetchDataFromDB: ( appId ) => {
         return new Promise((resolve,reject) => {
-            dbUtils.fetchApplicationRecordFromDB(appId)
+            application.fetchAppById(appId)
             .then(data => {
-                let appRecord = data[0],
+                let appRecord = data[0][0],
                     promiseArr = []
-        
+                console.log("heelo",appRecord)
                 appRecord.tours.forEach( tourId => {
-                    let eachPromise = dbUtils.fetchTourRecordFromDB( tourId );
+                    let eachPromise = tour.fetchTourById( tourId );
                     promiseArr.push( eachPromise )
                 });
         
                 Promise.all( promiseArr )
                 .then( data => {
-                    toursData = data.map( ele => ele[0])
+
+                    toursData = data.map( ele => ele[0][0])
                     appRecord.toursData = toursData
                     resolve(appRecord)
                 })

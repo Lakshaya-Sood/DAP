@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    sequelize.define('application', {
+    var application = sequelize.define('application', {
         app_id: { 
             type: DataTypes.UUID,
             allowNull: false,
@@ -17,10 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,  
             defaultValue: '{}'
         }
-    },
-    {
-        associate: function(models) {
-            application.hasMany(models.tour);
-        }
     })
+
+    return application
   }

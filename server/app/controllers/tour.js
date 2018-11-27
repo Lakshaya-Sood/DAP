@@ -1,8 +1,9 @@
 var db = require('../../config/sequelize');
 
-const fetchToursByAppid = function(appId){
+const fetchTourById = function(tourId){
     return new Promise((resolve,reject) => {
-        db.tour.findAll({where: {app_id: appId}})
+        db.sequelize.query('SELECT * FROM tour WHERE tour_id = ?',
+        { raw: true, replacements: [tourId]})
         .then(records => {
             resolve(records)
         })
@@ -12,8 +13,8 @@ const fetchToursByAppid = function(appId){
     })
 }
 
-const fetchTours = function(req, res) {
-    fetchToursByAppid( req.query.appId )
+const fetchTour = function(req, res) {
+    fetchTourById( req.query.tourId )
     .then(result => {
         return res.json(result)
     })
@@ -25,7 +26,7 @@ const fetchTours = function(req, res) {
     })
 }
 
-module.export = {
-    fetchToursByAppid,
-    fetchTours
+module.exports = {
+    fetchTourById,
+    fetchTour
 }

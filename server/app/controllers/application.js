@@ -2,7 +2,8 @@ var db = require('../../config/sequelize');
 
 const fetchAppById = function(appId){
     return new Promise((resolve,reject) => {
-        db.application.findOne({where: {app_id: appId}})
+        db.sequelize.query('SELECT * FROM application WHERE app_id = ?',
+        { raw: true, replacements: [appId]})
         .then(record => {
             resolve(record)
         })
@@ -25,7 +26,7 @@ const fetchRecord = function(req, res) {
     })
 }
 
-module.export = {
+module.exports = {
     fetchAppById,
     fetchRecord
 }
