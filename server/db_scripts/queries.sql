@@ -96,8 +96,8 @@ INSERT INTO tour VALUES (uuid_generate_v4(),'Third Tour','
 -- INSERT QUERIES APPLICATION TABLE
 INSERT INTO application VALUES (uuid_generate_v4(),'Greeting App','
     {
-        "adfff840-3d6b-4b1f-92be-8170b0071d7f",
-        "8c065324-c99c-4250-9440-6c61a3c33d09",
-        "e0f7c6c3-8d8e-4a09-98c9-1709139fc0a5"
+        "3ccf99b8-0406-48cc-be0e-7e22fc1989be",
+        "4ba993b5-7a5c-4d97-b8ea-d7d37abe63a1",
+        "3fad056e-4685-4b72-a952-4492c048dc1d"
     }'
 );
