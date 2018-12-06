@@ -1,6 +1,18 @@
 <script>
+  import SearchResult from './SearchResult.vue';
+
   export default {
     name: 'modal',
+    props: ['tourData'],
+    components: {
+      SearchResult
+    },
+    data () {
+      return {
+        searchText: '',
+        selectedSortOption: 'Menu'
+      }
+    },
     methods: {
       close() {
         this.$emit('close');
@@ -39,8 +51,15 @@
           id="modalDescription"
         >
           <slot name="body">
-            <input v-model="message" class="tour-search-input">
-            
+            <input v-model="searchText" class="tour-search-input">
+            <p class="sort-para">Sort by: 
+              <span class="sort-option">Menu</span> | 
+              <span class="sort-option">Recommended</span> | 
+              <span class="sort-option">Newest First</span> | 
+              <span class="sort-option">A-Z</span>
+              {{tourData.x}}
+            </p>
+            <SearchResult />
           </slot>
         </section>
       </div>
@@ -58,6 +77,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: sans-serif;
   }
 
   .modal {
@@ -112,5 +132,14 @@
     text-indent: 60px;
     box-shadow: 1px 1px #888888;
     font-size: 25px;
+  }
+  .sort-para{
+    position: relative;
+    left: 6%;
+    color: #888888;
+    width: 85%;
+  }
+  .sort-option{
+    color: #0099ff;
   }
 </style>
