@@ -6,6 +6,9 @@
     props: {
       tourData: {
         required: true
+      },
+      managerObj: {
+        required: true
       }
     },
     components: {
@@ -14,6 +17,10 @@
     watch: {
       tourData: function () {
         this.tourList= JSON.parse(JSON.stringify(this.tourData))
+      },
+      managerObj: function (){
+        this.manager = this.managerObj;
+        this.managerObj.tours[0]
       },
       currentSortOption: function() {
         switch( this.currentSortOption ) {

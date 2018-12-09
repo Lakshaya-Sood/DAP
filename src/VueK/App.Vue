@@ -1,5 +1,6 @@
 <script>
   import ModalBox from './ModalBox.vue';
+  import TourManager from './TourManager';
   const x = {
       "a": 1
   }
@@ -11,7 +12,8 @@
     data () {
       return {
         isModalVisible: false,
-        tourData:[]
+        tourData:[],
+        managerObj: null
       };
     },
     methods: {
@@ -35,7 +37,9 @@
     },
     beforeMount(){
         this.fetchData().then( tours => {
-          this.tourData = tours
+          this.tourData = tours;
+          this.managerObj = new TourManager();
+          this.managerObj.setTours(tours);
         }).catch( err => {
           console.log( err )
         })
@@ -48,6 +52,7 @@
     <ModalBox
       v-show="isModalVisible"
       :tourData="tourData"
+      :managerObj="managerObj"
       @close="closeModal"
     />
   </div>

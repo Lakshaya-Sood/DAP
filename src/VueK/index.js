@@ -11,9 +11,10 @@ var html_to_insert = `
 var bodyElement = document.getElementsByTagName('body')[0]
 bodyElement.insertAdjacentHTML('beforeend', html_to_insert);
 
+var VueApp = new Vue({
+    el: '#tourApp',
+    render: h => h(App)
+})
 document.getElementById("tourBttn").addEventListener("click", function(){
-    new Vue({
-        el: '#tourApp',
-        render: h => h(App)
-    })
+    VueApp.$children[0].isModalVisible = (!VueApp.$children[0].isModalVisible)
 });
