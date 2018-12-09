@@ -3,20 +3,43 @@
 
   export default {
     name: 'modal',
-    props: ['tourData'],
+    props: {
+      tourData: {
+        required: true
+      }
+    },
     components: {
       SearchResult
+    },
+    watch: {
+      tourData: function () {
+        this.tourList= this.tourData
+      }
     },
     data () {
       return {
         searchText: '',
-        selectedSortOption: 'Menu'
+        currentSortOption: 1,
+        tourList: this.tourData
       }
     },
     methods: {
       close() {
         this.$emit('close');
       },
+      changeSortOption(val){
+        this.currentSortOption = val;
+        console.log(this.tourList)
+      },
+      changeSortOptionByChevron(val){
+        let newSortOpt = this.currentSortOption
+        if( val=='right' && this.currentSortOption < 4 ) {
+          this.currentSortOption+=1
+        } 
+        if( val=='left' && this.currentSortOption > 1 ) {
+          this.currentSortOption-=1
+        }
+      }
     },
   };
 </script>
@@ -52,14 +75,23 @@
         >
           <slot name="body">
             <input v-model="searchText" class="tour-search-input">
-            <p class="sort-para">Sort by: 
-              <span class="sort-option">Menu</span> | 
-              <span class="sort-option">Recommended</span> | 
-              <span class="sort-option">Newest First</span> | 
-              <span class="sort-option">A-Z</span>
-              {{tourData.x}}
+            <p class="sort-para">Sort by :  
+              <span class="sort-option" v-on:click="changeSortOption(1)">&nbsp;&nbsp;Menu&nbsp;&nbsp;</span>  |  
+              <span class="sort-option" v-on:click="changeSortOption(2)">&nbsp;&nbsp;Recommended&nbsp;&nbsp;</span>  |  
+              <span class="sort-option" v-on:click="changeSortOption(3)">&nbsp;&nbsp;Newest First&nbsp;&nbsp;</span>  |  
+              <span class="sort-option" v-on:click="changeSortOption(4)">&nbsp;&nbsp;A-Z&nbsp;&nbsp;</span>
             </p>
             <SearchResult />
+            <svg class="icon icon-chevron-right" v-on:click="changeSortOptionByChevron('right')"><use xlink:href="#icon-chevron-right"></use></svg>
+            <symbol id="icon-chevron-right" viewBox="0 0 19 28">
+              <title>chevron-right</title>
+              <path d="M17.297 13.703l-11.594 11.594c-0.391 0.391-1.016 0.391-1.406 0l-2.594-2.594c-0.391-0.391-0.391-1.016 0-1.406l8.297-8.297-8.297-8.297c-0.391-0.391-0.391-1.016 0-1.406l2.594-2.594c0.391-0.391 1.016-0.391 1.406 0l11.594 11.594c0.391 0.391 0.391 1.016 0 1.406z"></path>
+            </symbol>
+            <svg class="icon icon-chevron-left" v-on:click="changeSortOptionByChevron('left')"><use xlink:href="#icon-chevron-left"></use></svg>
+            <symbol id="icon-chevron-left" viewBox="0 0 21 28">
+              <title>chevron-left</title>
+              <path d="M18.297 4.703l-8.297 8.297 8.297 8.297c0.391 0.391 0.391 1.016 0 1.406l-2.594 2.594c-0.391 0.391-1.016 0.391-1.406 0l-11.594-11.594c-0.391-0.391-0.391-1.016 0-1.406l11.594-11.594c0.391-0.391 1.016-0.391 1.406 0l2.594 2.594c0.391 0.391 0.391 1.016 0 1.406z"></path>
+            </symbol>
           </slot>
         </section>
       </div>
@@ -79,7 +111,6 @@
     align-items: center;
     font-family: sans-serif;
   }
-
   .modal {
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;
@@ -88,6 +119,10 @@
     flex-direction: column;
     width: 85%;
     border-radius: 7px;
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
   }
   .modal-header-title{
     position: relative;
@@ -109,6 +144,7 @@
   .modal-body {
     position: relative;
     padding: 20px 10px;
+    margin-bottom: 25px;
   }
 
   .btn-close {
@@ -137,9 +173,32 @@
     position: relative;
     left: 6%;
     color: #888888;
-    width: 85%;
+    font-weight: bold;
+    width: 86%;
+    display: -webkit-inline-box;
+    margin-top: 40px;
+    margin-bottom: 25px;
   }
   .sort-option{
     color: #0099ff;
+    cursor: pointer
+  }
+  .icon {
+    display: inline-block;
+    stroke: #0099ff;
+    fill: #0099ff;
+    width: 25px;
+    height: 300px;
+    cursor: pointer;
+    padding: 15px;
+  }
+  .icon:hover {
+    background-color: rgba(0, 0, 0, 0.11);
+  }
+  .icon-chevron-right {
+    float: right;
+  }
+  .icon-chevron-left{
+    float: left;
   }
 </style>
