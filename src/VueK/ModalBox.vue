@@ -22,6 +22,11 @@
           case 2:
             break;
           case 3:
+            this.tourList = this.tourList.sort(function(a, b){
+              if(a.created_date < b.created_date) { return 1; }
+              if(a.created_date > b.created_date) { return -1; }
+              return 0;
+            })
             break;
           case 4:
             this.tourList = this.tourList.sort(function(a, b){
@@ -33,7 +38,6 @@
           default:
             break;
         }
-        console.log(this.tourList )
       }
     },
     data () {
@@ -99,10 +103,10 @@
             <input v-model="searchText" class="tour-search-input">
             <img v-bind:src="crossImageSrc" class="cross-icon" v-if="searchText.length" v-on:click="clearSearchText()"/>
             <p class="sort-para">Sort by :  
-              <span class="sort-option" v-on:click="changeSortOption(1)">&nbsp;&nbsp;Menu&nbsp;&nbsp;</span>  |  
-              <span class="sort-option" v-on:click="changeSortOption(2)">&nbsp;&nbsp;Recommended&nbsp;&nbsp;</span>  |  
-              <span class="sort-option" v-on:click="changeSortOption(3)">&nbsp;&nbsp;Newest First&nbsp;&nbsp;</span>  |  
-              <span class="sort-option" v-on:click="changeSortOption(4)">&nbsp;&nbsp;A-Z&nbsp;&nbsp;</span>
+              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==1 }" v-on:click="changeSortOption(1)">&nbsp;&nbsp;Menu&nbsp;&nbsp;</span>  |  
+              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==2 }" v-on:click="changeSortOption(2)">&nbsp;&nbsp;Recommended&nbsp;&nbsp;</span>  |  
+              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==3 }" v-on:click="changeSortOption(3)">&nbsp;&nbsp;Newest First&nbsp;&nbsp;</span>  |  
+              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==4 }" v-on:click="changeSortOption(4)">&nbsp;&nbsp;A-Z&nbsp;&nbsp;</span>
             </p>
             <SearchResult />
             <svg class="icon icon-chevron-right" v-on:click="changeSortOptionByChevron('right')"><use xlink:href="#icon-chevron-right"></use></svg>
@@ -205,6 +209,10 @@
   .sort-option{
     color: #0099ff;
     cursor: pointer
+  }
+  .selected-option{
+    color: #888888;
+    font-size: 16px;
   }
   .icon {
     display: inline-block;
