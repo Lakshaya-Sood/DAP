@@ -48,8 +48,6 @@
 .result-whole-style{
     width: 91%;
     height: 33px;
-    position: relative;
-    display: -webkit-inline-box;
 }
 .grid-container-main {
   width: 100%;
