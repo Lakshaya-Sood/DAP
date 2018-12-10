@@ -19,8 +19,9 @@
         this.tourList= JSON.parse(JSON.stringify(this.tourData))
       },
       managerObj: function (){
+        console.log(this.managerObj)
         this.manager = this.managerObj;
-        this.managerObj.tours[0]
+        //this.managerObj.tours[0]
       },
       currentSortOption: function() {
         switch( this.currentSortOption ) {
@@ -178,7 +179,6 @@
   .modal-body {
     position: relative;
     padding: 20px 10px;
-    margin-bottom: 25px;
   }
 
   .btn-close {
@@ -226,7 +226,7 @@
     stroke: #0099ff;
     fill: #0099ff;
     width: 25px;
-    height: 300px;
+    height: 280px;
     cursor: pointer;
     padding: 15px;
   }
