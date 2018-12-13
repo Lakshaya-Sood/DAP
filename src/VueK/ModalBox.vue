@@ -1,5 +1,6 @@
 <script>
   import SearchResult from './SearchResult.vue';
+  import Loading from './Loading.vue';
   import constants from './constants';
   export default {
     name: 'modal',
@@ -12,16 +13,18 @@
       }
     },
     components: {
-      SearchResult
+      SearchResult,
+      Loading
     },
     watch: {
       tourData: function () {
         this.tourList= JSON.parse(JSON.stringify(this.tourData))
       },
       managerObj: function (){
-        console.log(this.managerObj)
-        this.manager = this.managerObj;
-        this.managerObj.tours[0].__proto__.start()
+        let self = this
+        setTimeout(()=>{self.tourManager = self.managerObj}, 7000);
+        
+        //this.managerObj.tours[0].__proto__.start()
       },
       currentSortOption: function() {
         switch( this.currentSortOption ) {
@@ -53,7 +56,8 @@
         searchText: '',
         currentSortOption: 1,
         tourList: this.tourData,
-        crossImageSrc: constants.crossIcon_b64
+        crossImageSrc: constants.crossIcon_b64,
+        tourManager: null
       }
     },
     methods: {
@@ -64,7 +68,7 @@
         this.currentSortOption = val;
       },
       changeSortOptionByChevron( val ) {
-        if( val=='right' && this.currentSortOption < 4 ) {
+        if( val=='right' && this.currentSortOption < 3 ) {
           this.currentSortOption+=1
         } 
         if( val=='left' && this.currentSortOption > 1 ) {
@@ -110,13 +114,13 @@
           <slot name="body">
             <input v-model="searchText" class="tour-search-input">
             <img v-bind:src="crossImageSrc" class="cross-icon" v-if="searchText.length" v-on:click="clearSearchText()"/>
-            <p class="sort-para">Sort by :  
-              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==1 }" v-on:click="changeSortOption(1)">&nbsp;&nbsp;Menu&nbsp;&nbsp;</span>  |  
-              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==2 }" v-on:click="changeSortOption(2)">&nbsp;&nbsp;Recommended&nbsp;&nbsp;</span>  |  
-              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==3 }" v-on:click="changeSortOption(3)">&nbsp;&nbsp;Newest First&nbsp;&nbsp;</span>  |  
-              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==4 }" v-on:click="changeSortOption(4)">&nbsp;&nbsp;A-Z&nbsp;&nbsp;</span>
+            <p class="sort-para">Sort by :
+              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==1 }" v-on:click="changeSortOption(1)">&nbsp;&nbsp;Recommended&nbsp;&nbsp;</span>  |  
+              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==2 }" v-on:click="changeSortOption(2)">&nbsp;&nbsp;Newest First&nbsp;&nbsp;</span>  |  
+              <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==3 }" v-on:click="changeSortOption(3)">&nbsp;&nbsp;A-Z&nbsp;&nbsp;</span>
             </p>
-            <SearchResult />
+            <div v-if="!!!tourManager" ><Loading /></div>
+            <div v-if="!!tourManager" ><SearchResult /></div>
             <svg class="icon icon-chevron-right" v-on:click="changeSortOptionByChevron('right')"><use xlink:href="#icon-chevron-right"></use></svg>
             <symbol id="icon-chevron-right" viewBox="0 0 19 28">
               <title>chevron-right</title>
@@ -244,7 +248,7 @@
     width: 35px;
     position: relative;
     top: 5px;
-    right: 110px;
+    right: 9%;
     cursor: pointer;
   }
   .cross-icon:hover{
