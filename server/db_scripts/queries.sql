@@ -4,18 +4,25 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE application(
  app_id uuid DEFAULT uuid_generate_v4(),
  app_name VARCHAR (20) NOT NULL,
- tours text[] NOT NULL
+ styles JSON NOT NULL,
+ created_on TIMESTAMP NOT NULL,
+ updated_on TIMESTAMP NOT NULL
 );
 
 -- TOUR TABLE CREATE
 CREATE TABLE tour(
  tour_id uuid DEFAULT uuid_generate_v4(),
  tour_name VARCHAR (50) NOT NULL,
- steps json NOT NULL
+ app_id VARCHAR(36) NOT NULL,
+ created_on TIMESTAMP NOT NULL,
+ steps JSON NOT NULL
 );
 
+-- INSERT QUERIES APPLICATION TABLE
+INSERT INTO application VALUES (uuid_generate_v4(),'Greeting App','{"fontSize":"16px","fontFamily":"arial"}',current_timestamp,current_timestamp);
+
 -- INSERT QUERIES TOUR TABLE
-INSERT INTO tour VALUES (uuid_generate_v4(),'First Tour','
+INSERT INTO tour VALUES (uuid_generate_v4(),'First Tour','90cf4642-2f52-41b3-aebd-f46eacc2bfc5',current_timestamp,'
     {
         "id": "firstTour",
         "steps": [
@@ -40,8 +47,7 @@ INSERT INTO tour VALUES (uuid_generate_v4(),'First Tour','
         ]
     }'
 );
-
-INSERT INTO tour VALUES (uuid_generate_v4(),'Second Tour','
+INSERT INTO tour VALUES (uuid_generate_v4(),'Second Tour','90cf4642-2f52-41b3-aebd-f46eacc2bfc5',current_timestamp,'
     {
         "id": "secondTour",
         "steps": [
@@ -66,8 +72,7 @@ INSERT INTO tour VALUES (uuid_generate_v4(),'Second Tour','
         ]
     }'
 );
-
-INSERT INTO tour VALUES (uuid_generate_v4(),'Third Tour','
+INSERT INTO tour VALUES (uuid_generate_v4(),'Third Tour','90cf4642-2f52-41b3-aebd-f46eacc2bfc5',current_timestamp,'
     {
         "id": "thirdTour",
         "steps": [
@@ -90,14 +95,5 @@ INSERT INTO tour VALUES (uuid_generate_v4(),'Third Tour','
                 "content": "Can be seen in the high-latitude regions."
             }
         ]
-    }'
-);
-
--- INSERT QUERIES APPLICATION TABLE
-INSERT INTO application VALUES (uuid_generate_v4(),'Greeting App','
-    {
-        "3ccf99b8-0406-48cc-be0e-7e22fc1989be",
-        "4ba993b5-7a5c-4d97-b8ea-d7d37abe63a1",
-        "3fad056e-4685-4b72-a952-4492c048dc1d"
     }'
 );

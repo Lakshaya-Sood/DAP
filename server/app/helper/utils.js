@@ -23,7 +23,7 @@ const utils = {
     generateScriptsStrings: ( appDetails ) => {
         return {
             "indexjsString": funcGenForApp.generateIndexScript( appDetails.app_id ),
-            "configjsString": funcGenForApp.generateConfigScript( appDetails.app_id, appDetails.toursData )
+            "configjsString": funcGenForApp.generateConfigScript( appDetails.app_id, appDetails.toursData, appDetails.styles )
         }
     },
     getPathForSaveFile: ( appId ) => {
@@ -60,22 +60,14 @@ const utils = {
         return new Promise((resolve,reject) => {
             application.fetchAppById(appId)
             .then(data => {
-                let appRecord = data[0][0],
-                    promiseArr = []
-                console.log("heelo",appRecord)
-                appRecord.tours.forEach( tourId => {
-                    let eachPromise = tour.fetchTourById( tourId );
-                    promiseArr.push( eachPromise )
-                });
-        
-                Promise.all( promiseArr )
-                .then( data => {
-
-                    toursData = data.map( ele => ele[0][0])
-                    appRecord.toursData = toursData
-                    resolve(appRecord)
+                let appRecord = data[0][0];
+                tour.fetchToursByAppId(appId)
+                .then( tours => {
+                    resolve({...appRecord, toursData: tours[0]})
                 })
-                .catch( err => reject(err))
+                .catch( err => {
+                    reject(err)
+                })
             })
             .catch( err => reject(err))
         })

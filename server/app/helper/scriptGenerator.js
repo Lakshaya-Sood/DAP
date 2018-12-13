@@ -25,7 +25,7 @@ const funcGenForApp = {
             })
         })`
     },
-    generateConfigScript: ( appId, toursData ) => {
+    generateConfigScript: ( appId, toursData, appStyles ) => {
         return `
         window.appConfig = {
             libraryLink : "${serverConst.STATIC_FILE_SERVER_URL}/library.js",
@@ -33,13 +33,14 @@ const funcGenForApp = {
                 toursData.map(ele => {
                     return {
                         tour_id: ele.tour_id,
-                        tour_name: ele.tour_name
+                        tour_name: ele.tour_name,
+                        tour_created_on: ele.created_on
                     }
                 })
             )},
-            rootFolderLink: "${serverConst.STATIC_FILE_SERVER_URL}/${appId}/"
-        }
-        `
+            rootFolderLink: "${serverConst.STATIC_FILE_SERVER_URL}/${appId}/",
+            styles: ${JSON.stringify(appStyles)}
+        }`
     },
     generateDataScriptAndPath: ( appDetails, scriptsStringObj, pathjson ) => {
         appDetails.toursData.forEach(function(ele){

@@ -21,7 +21,7 @@
       managerObj: function (){
         console.log(this.managerObj)
         this.manager = this.managerObj;
-        //this.managerObj.tours[0]
+        this.managerObj.tours[0].__proto__.start()
       },
       currentSortOption: function() {
         switch( this.currentSortOption ) {
