@@ -1,48 +1,46 @@
 <script>
   export default {
     name: 'searchResult',
+    props: {
+      tourManager: {
+        required: true
+      },
+      tourList: {
+        required: true
+      }
+    },
+    watch: {
+      tourList: function () {
+        
+      },
+      tourManager: function (){
+         console.log("333",this.tourManager)
+      }
+    },
     data(){
       return {
-        recentData : ["Add new role","Add role detail","View audit details"],
-        rolesData : ["Add new role","Add role detail","View audit details","Delete Role","Discontinue Role","Add new position","Delete position",
-        "Ad new role","Add role detail","View audit details","Delete Role","Discontinue Role"],
-        usersData : ["New test user","Assign roles"],
-        fncUserData : ["Add new function user","Edit user details","Delete functional user","Assign Role"]
       }
     },
     methods: {
+       startTour(tourName) {
+         let selectedTour = this.tourManager.tours.filter((item)=>item.name == tourName )
+         console.log(selectedTour)
+         selectedTour[0].__proto__.start();
+       }
     },
   };
 </script>
 <template>
-  <div class="result-whole-style">
-    <div class="grid-container-main">
-      <div class="grid-item-main right-grey-border" style="padding-left: 20px;">
-        <div class="grid-container-child grid-col-1">
-          <div class="grid-item-child-header">Recent</div>
-          <div class="grid-item-child-opt" v-for="item in recentData"><span class="tour-opt-text">{{item}}</span></div>
+    <div class="result-whole-style">
+      <div class="grid-container-main">
+        <div class="grid-item-main grid-item-header">
+          Result
         </div>
-      </div>
-      <div class="grid-item-main grid-col-2 right-grey-border left-grey-border" style="padding-left:37px;padding-right:15px">
-        <div class="grid-container-child grid-col-2">
-          <div class="grid-item-child-header" style="grid-column: 1 / 3;" >Roles</div>
-          <div class="grid-item-child-opt" v-for="item in rolesData"><span class="tour-opt-text">{{item}}</span></div>
-        </div>
-      </div>
-      <div class="grid-item-main right-grey-border left-grey-border" style="padding-left:37px;padding-right:15px">
-        <div class="grid-container-child grid-col-1">
-          <div class="grid-item-child-header">Users</div>
-          <div class="grid-item-child-opt" v-for="item in usersData"><span class="tour-opt-text">{{item}}</span></div>
-        </div>
-      </div>  
-      <div class="grid-item-main left-grey-border" style="padding-left:37px;padding-right:15px">
-        <div class="grid-container-child grid-col-1">
-          <div class="grid-item-child-header">Functional Users</div>
-          <div class="grid-item-child-opt" v-for="item in fncUserData"><span class="tour-opt-text">{{item}}</span></div>
+        <div v-for="(item, index) in tourList" class="grid-item-main grid-item-opt" v-on:click="startTour(item.tour_name)">
+          <span class="tour-opt-text">{{item.tour_name}}</span>
         </div>
       </div>
     </div>
-  </div>  
 </template>
 <style>
 .result-whole-style{
@@ -52,12 +50,16 @@
 .grid-container-main {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   text-align: left;
-  left: 5%;
+  left: 7%;
   position: relative;
+  grid-auto-flow: column;
 }
 .grid-item-main {
+  grid-template-columns: repeat(1, 1fr);
+  grid-auto-rows: minmax(50px, auto);
+  padding-right: 10px
 }
 .grid-col-2{
   grid-column: 2 / 4;
@@ -80,12 +82,12 @@
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: minmax(50px, auto);
 }
-.grid-item-child-header{
+.grid-item-header{
   color: #888888;
   font-size: 18px;
   font-weight: bold;
 }
-.grid-item-child-opt{
+.grid-item-opt{
   color: #0099ff;
   font-size: 15px;
 }

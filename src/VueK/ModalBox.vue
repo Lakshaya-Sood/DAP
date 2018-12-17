@@ -18,29 +18,40 @@
     },
     watch: {
       tourData: function () {
-        this.tourList= JSON.parse(JSON.stringify(this.tourData))
+        this.matchingTours= JSON.parse(JSON.stringify(this.tourData))
       },
       managerObj: function (){
         let self = this
-        setTimeout(()=>{self.tourManager = self.managerObj}, 7000);
+        setTimeout(()=>{self.tourManager = self.managerObj}, 1000);
         
         //this.managerObj.tours[0].__proto__.start()
+      },
+      searchText(){
+        let searchText = this.searchText;
+        this.matchingTours = this.tourData.filter((item)=>{
+          if((item.tour_name.toLowerCase()).indexOf(searchText.toLowerCase()) !== -1){
+            return true;
+          } else {
+            return false;
+          }
+        })
       },
       currentSortOption: function() {
         switch( this.currentSortOption ) {
           case 1:
-            break;
-          case 2:
-            break;
-          case 3:
-            this.tourList = this.tourList.sort(function(a, b){
-              if(a.created_date < b.created_date) { return 1; }
-              if(a.created_date > b.created_date) { return -1; }
+            this.matchingTours = this.tourData.sort(function(a, b){
+              if(a.tour_id < b.tour_id) { return -1; }
+              if(a.tour_id > b.tour_id) { return 1; }
               return 0;
             })
             break;
-          case 4:
-            this.tourList = this.tourList.sort(function(a, b){
+          case 2:
+            this.matchingTours = this.tourData.sort(function(x, y){
+                return (new Date(y.tour_created_on) - new Date(x.tour_created_on));
+            })
+            break;
+          case 3:
+            this.matchingTours = this.tourData.sort(function(a, b){
               if(a.tour_name < b.tour_name) { return -1; }
               if(a.tour_name > b.tour_name) { return 1; }
               return 0;
@@ -55,9 +66,9 @@
       return {
         searchText: '',
         currentSortOption: 1,
-        tourList: this.tourData,
         crossImageSrc: constants.crossIcon_b64,
-        tourManager: null
+        tourManager: null,
+        matchingTours: null
       }
     },
     methods: {
@@ -120,7 +131,7 @@
               <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==3 }" v-on:click="changeSortOption(3)">&nbsp;&nbsp;A-Z&nbsp;&nbsp;</span>
             </p>
             <div v-if="!!!tourManager" ><Loading /></div>
-            <div v-if="!!tourManager" ><SearchResult /></div>
+            <div v-if="!!tourManager" ><SearchResult :tourManager="tourManager" :tourList="matchingTours" /></div>
             <svg class="icon icon-chevron-right" v-on:click="changeSortOptionByChevron('right')"><use xlink:href="#icon-chevron-right"></use></svg>
             <symbol id="icon-chevron-right" viewBox="0 0 19 28">
               <title>chevron-right</title>
