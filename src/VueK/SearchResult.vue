@@ -14,7 +14,6 @@
         
       },
       tourManager: function (){
-         console.log("333",this.tourManager)
       }
     },
     data(){
@@ -22,20 +21,21 @@
       }
     },
     methods: {
-       startTour(tourName) {
-         let selectedTour = this.tourManager.tours.filter((item)=>item.name == tourName )
-         console.log(selectedTour)
-         selectedTour[0].__proto__.start();
-       }
+      close() {
+        this.$emit('close');
+      },
+      startTour(tourName) {
+        let selectedTour = this.tourManager.tours.filter((item)=>item.name == tourName )
+        console.log(selectedTour)
+        selectedTour[0].__proto__.start(selectedTour[0].name,selectedTour[0].stepDefURI);
+        this.close();
+      }
     },
   };
 </script>
 <template>
     <div class="result-whole-style">
       <div class="grid-container-main">
-        <div class="grid-item-main grid-item-header">
-          Result
-        </div>
         <div v-for="(item, index) in tourList" class="grid-item-main grid-item-opt" v-on:click="startTour(item.tour_name)">
           <span class="tour-opt-text">{{item.tour_name}}</span>
         </div>
@@ -48,7 +48,7 @@
     height: 33px;
 }
 .grid-container-main {
-  width: 100%;
+  width: 90%;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
   text-align: left;
@@ -63,12 +63,6 @@
 }
 .grid-col-2{
   grid-column: 2 / 4;
-}
-.right-grey-border{
-  border-right: 1px solid #88888854;
-}
-.left-grey-border{
-  border-left: 1px solid #88888854;
 }
 .grid-container-child{
   width: 100%;
@@ -90,11 +84,12 @@
 .grid-item-opt{
   color: #0099ff;
   font-size: 15px;
+  padding: 10px;
 }
 .tour-opt-text{
   cursor: pointer;
 }
 .tour-opt-text:hover{
-  font-weight: bold;
+  text-decoration:underline 
 }
 </style>

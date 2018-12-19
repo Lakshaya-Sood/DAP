@@ -7,12 +7,12 @@ export default class Tour {
         this.stepData = null;
     }
 
-    start() {
-        script(`${window.appConfig.rootFolderLink}tour.${this.stepDefURI}.js`)
+    start(name,stepDefURI) {
+        script(`${window.appConfig.rootFolderLink}tour.${stepDefURI}.js`)
         .then(() => {
-            console.log(`step defination for tour: ${this.name} is successfully fecthed. Filename: tour.${this.stepDefURI}.js`)
-            this.stepData = window[this.stepDefURI];
-            hopscotch.startTour(this.stepData);
+            console.log(`step defination for tour: ${name} is successfully fecthed. Filename: tour.${stepDefURI}.js`)
+            //this.stepData = window[stepDefURI];
+            hopscotch.startTour(window[stepDefURI]);
         })
         .catch((err) => {
             console.log('Error occured: ',err)

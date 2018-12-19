@@ -8,6 +8,9 @@ var FETCH_CONFIG_URL = 'http://localhost:7777/90cf4642-2f52-41b3-aebd-f46eacc2bf
                 s.onload = function(){
                     resolve();
                 };
+                s.onerror = function(err){
+                    reject(err);
+                }
                 var x = document.getElementsByTagName('script')[0];
                 x.parentNode.insertBefore(s, x);
             });
@@ -18,5 +21,10 @@ var FETCH_CONFIG_URL = 'http://localhost:7777/90cf4642-2f52-41b3-aebd-f46eacc2bf
             script(window.appConfig.libraryLink)
             .then(function(){
                 console.log('lib loaded')
+            }).catch((err)=>{
+                console.log("lib not loaded: ",err)
             })
+        })
+        .catch((err)=>{
+            console.log("config not loaded: ",err)
         })

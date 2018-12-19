@@ -12,6 +12,9 @@ const funcGenForApp = {
                 s.onload = function(){
                     resolve();
                 };
+                s.onerror = function(err){
+                    reject(err);
+                }
                 var x = document.getElementsByTagName('script')[0];
                 x.parentNode.insertBefore(s, x);
             });
@@ -22,7 +25,12 @@ const funcGenForApp = {
             script(window.appConfig.libraryLink)
             .then(function(){
                 console.log('lib loaded')
+            }).catch((err)=>{
+                console.log("lib not loaded: ",err)
             })
+        })
+        .catch((err)=>{
+            console.log("config not loaded: ",err)
         })`
     },
     generateConfigScript: ( appId, toursData, appStyles ) => {

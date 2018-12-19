@@ -52,6 +52,7 @@ const utils = {
                 resolve()
             })
             .catch( err => {
+                console.log(err)
                 reject( err )
             })
         })
@@ -66,10 +67,14 @@ const utils = {
                     resolve({...appRecord, toursData: tours[0]})
                 })
                 .catch( err => {
+                    console.log(err)
                     reject(err)
                 })
             })
-            .catch( err => reject(err))
+            .catch( err => {
+                console.log(err)
+                reject(err)
+            })
         })
     }
 }

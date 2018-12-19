@@ -3,7 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
 const { VueLoaderPlugin } = require('vue-loader');
 export default {
-    entry: path.join(__dirname, 'src/index.js'),
+    entry: path.join(__dirname, 'src/VueK/index.js'),
     output: {
         path: path.join(__dirname, 'dist'),
         filename: '[name].bundle.js'

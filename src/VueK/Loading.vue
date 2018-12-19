@@ -24,7 +24,7 @@
     animation: spin 2s linear infinite;
     margin: 0px auto;
     position: relative;
-    top: 80px;
+    top: 20px;
 }
 
 /* Safari */

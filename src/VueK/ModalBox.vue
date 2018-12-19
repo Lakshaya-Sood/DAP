@@ -2,6 +2,8 @@
   import SearchResult from './SearchResult.vue';
   import Loading from './Loading.vue';
   import constants from './constants';
+  import _ from 'lodash';
+
   export default {
     name: 'modal',
     props: {
@@ -18,40 +20,37 @@
     },
     watch: {
       tourData: function () {
-        this.matchingTours= JSON.parse(JSON.stringify(this.tourData))
+        this.matchingTours= _.cloneDeep(this.tourData)
       },
       managerObj: function (){
         let self = this
-        setTimeout(()=>{self.tourManager = self.managerObj}, 1000);
-        
-        //this.managerObj.tours[0].__proto__.start()
+        self.tourManager = self.managerObj
       },
       searchText(){
-        let searchText = this.searchText;
-        this.matchingTours = this.tourData.filter((item)=>{
-          if((item.tour_name.toLowerCase()).indexOf(searchText.toLowerCase()) !== -1){
-            return true;
-          } else {
-            return false;
-          }
-        })
+        let searchText = this.searchText,
+          tempResult = this.tourData.filter((item)=>{
+            if((item.tour_name.toLowerCase()).indexOf(searchText.toLowerCase()) !== -1){
+              return true;
+            } else {
+              return false;
+            }
+          })        
+        this.matchingTours = _.cloneDeep(tempResult)
       },
       currentSortOption: function() {
+
+        let tempResult;
         switch( this.currentSortOption ) {
           case 1:
-            this.matchingTours = this.tourData.sort(function(a, b){
-              if(a.tour_id < b.tour_id) { return -1; }
-              if(a.tour_id > b.tour_id) { return 1; }
-              return 0;
-            })
+            tempResult = this.tourData
             break;
           case 2:
-            this.matchingTours = this.tourData.sort(function(x, y){
+            tempResult = this.tourData.sort(function(x, y){
                 return (new Date(y.tour_created_on) - new Date(x.tour_created_on));
             })
             break;
           case 3:
-            this.matchingTours = this.tourData.sort(function(a, b){
+            tempResult = this.tourData.sort(function(a, b){
               if(a.tour_name < b.tour_name) { return -1; }
               if(a.tour_name > b.tour_name) { return 1; }
               return 0;
@@ -60,6 +59,7 @@
           default:
             break;
         }
+        this.matchingTours = _.cloneDeep(tempResult)
       }
     },
     data () {
@@ -130,18 +130,19 @@
               <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==2 }" v-on:click="changeSortOption(2)">&nbsp;&nbsp;Newest First&nbsp;&nbsp;</span>  |  
               <span v-bind:class="{ 'sort-option': true, 'selected-option': currentSortOption==3 }" v-on:click="changeSortOption(3)">&nbsp;&nbsp;A-Z&nbsp;&nbsp;</span>
             </p>
-            <div v-if="!!!tourManager" ><Loading /></div>
-            <div v-if="!!tourManager" ><SearchResult :tourManager="tourManager" :tourList="matchingTours" /></div>
-            <svg class="icon icon-chevron-right" v-on:click="changeSortOptionByChevron('right')"><use xlink:href="#icon-chevron-right"></use></svg>
-            <symbol id="icon-chevron-right" viewBox="0 0 19 28">
-              <title>chevron-right</title>
-              <path d="M17.297 13.703l-11.594 11.594c-0.391 0.391-1.016 0.391-1.406 0l-2.594-2.594c-0.391-0.391-0.391-1.016 0-1.406l8.297-8.297-8.297-8.297c-0.391-0.391-0.391-1.016 0-1.406l2.594-2.594c0.391-0.391 1.016-0.391 1.406 0l11.594 11.594c0.391 0.391 0.391 1.016 0 1.406z"></path>
-            </symbol>
             <svg class="icon icon-chevron-left" v-on:click="changeSortOptionByChevron('left')"><use xlink:href="#icon-chevron-left"></use></svg>
             <symbol id="icon-chevron-left" viewBox="0 0 21 28">
               <title>chevron-left</title>
               <path d="M18.297 4.703l-8.297 8.297 8.297 8.297c0.391 0.391 0.391 1.016 0 1.406l-2.594 2.594c-0.391 0.391-1.016 0.391-1.406 0l-11.594-11.594c-0.391-0.391-0.391-1.016 0-1.406l11.594-11.594c0.391-0.391 1.016-0.391 1.406 0l2.594 2.594c0.391 0.391 0.391 1.016 0 1.406z"></path>
-            </symbol>
+            </symbol>    
+            <svg class="icon icon-chevron-right" v-on:click="changeSortOptionByChevron('right')"><use xlink:href="#icon-chevron-right"></use></svg>
+            <symbol id="icon-chevron-right" viewBox="0 0 19 28">
+              <title>chevron-right</title>
+              <path d="M17.297 13.703l-11.594 11.594c-0.391 0.391-1.016 0.391-1.406 0l-2.594-2.594c-0.391-0.391-0.391-1.016 0-1.406l8.297-8.297-8.297-8.297c-0.391-0.391-0.391-1.016 0-1.406l2.594-2.594c0.391-0.391 1.016-0.391 1.406 0l11.594 11.594c0.391 0.391 0.391 1.016 0 1.406z"></path>
+            </symbol>        
+            <div v-if="!!!tourManager" ><Loading /></div>
+            <div v-if="!!tourManager" ><SearchResult :tourManager="tourManager" :tourList="matchingTours" @close="close"/></div>
+
           </slot>
         </section>
       </div>
@@ -215,7 +216,7 @@
     padding: 5px;
     background-position: 5px 5px;
     text-indent: 60px;
-    box-shadow: 1px 1px #888888;
+    border: 1px solid #888888;
     font-size: 25px;
   }
   .sort-para{
@@ -256,14 +257,14 @@
   }
   .cross-icon{
     float: right;
-    width: 35px;
+    width: 24px;
     position: relative;
-    top: 5px;
+    top: 10px;
     right: 9%;
     cursor: pointer;
   }
   .cross-icon:hover{
-    width: 38px;
-    top: 4px;
+    width: 25px;
+    top: 9px;
   }
 </style>
