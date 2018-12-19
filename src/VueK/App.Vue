@@ -50,7 +50,7 @@
 </script>
 
 <template>
-  <div id="app">
+  <div id="app123">
     <ModalBox
       v-show="isModalVisible"
       :tourData="tourData"

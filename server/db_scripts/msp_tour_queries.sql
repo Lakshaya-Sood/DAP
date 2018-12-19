@@ -1,4 +1,6 @@
-INSERT INTO tour VALUES (uuid_generate_v4(),'About Tabs on homepage','
+INSERT INTO application VALUES (uuid_generate_v4(),'MSP Designer','{"fontSize":"16px","fontFamily":"arial"}',current_timestamp,current_timestamp);
+
+INSERT INTO tour VALUES (uuid_generate_v4(),'About Tabs on homepage','bf20d025-9a5d-436e-8b55-b2d786b53b5c',current_timestamp,'
     {
         "id": "tabTour",
         "steps": [
@@ -42,7 +44,7 @@ INSERT INTO tour VALUES (uuid_generate_v4(),'About Tabs on homepage','
     }'
 );
 
-INSERT INTO tour VALUES (uuid_generate_v4(),'Know general components on UI','
+INSERT INTO tour VALUES (uuid_generate_v4(),'Know general components on UI','bf20d025-9a5d-436e-8b55-b2d786b53b5c',current_timestamp,'
     {
         "id": "GenCompTour",
         "steps": [
@@ -86,7 +88,7 @@ INSERT INTO tour VALUES (uuid_generate_v4(),'Know general components on UI','
     }'
 );
 
-INSERT INTO tour VALUES (uuid_generate_v4(),'Template Display Area Walkthrough','
+INSERT INTO tour VALUES (uuid_generate_v4(),'Template Display Area Walkthrough','bf20d025-9a5d-436e-8b55-b2d786b53b5c',current_timestamp,'
     {
         "id": "tempDispTour",
         "steps": [
