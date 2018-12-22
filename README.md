@@ -18,11 +18,11 @@ Steps for setting up local dev env
 4. install it and open it -> select new connection -> type postgres -> fill the details [hostname, db name, port, username, password]
 5. now go to server/db_scripts folder and use those to setup data 
 
-#(remember to take care of the fact that app_id is a foreign key in tour table) ;)
+# (remember to take care of the fact that app_id is a foreign key in tour table) ;)
 
 6. start the node server by running start.bat from server root DIR
 7. now open file post publish request in Repo's root DIR, Update the app id of your app
-8. run the file by firing <node post_publish_request.js> . you'll see a new folder will be created in staticServerBucket
+8. run the file by firing "node post_publish_request.js" . you'll see a new folder will be created in staticServerBucket
 9. now you are done with script generation for your app.
 10. next update the bookmarklet with your app id and add it to you browser's bookmark tab
 11. open up ur app in browser and click bookmarklet to "Let the DAP take over :)"
