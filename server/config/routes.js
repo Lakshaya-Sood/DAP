@@ -13,7 +13,7 @@ exports.init = function( app ) {
     app.get('/app',application.fetchRecord)
 
     // tour Routes
-    // app.post('/tour', tour.insertRecord);
+    app.post('/tour', tour.insertRecord);
     // app.put('/tour', tour.updateRecord);
     app.get('/tour',tour.fetchTour)
 

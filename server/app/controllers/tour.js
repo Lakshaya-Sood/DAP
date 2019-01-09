@@ -1,59 +1,112 @@
-var db = require('../../config/sequelize');
+var db = require("../../config/sequelize");
 
-const fetchTourByTourId = function(tourId){
-    return new Promise((resolve,reject) => {
-        db.sequelize.query('SELECT * FROM tour WHERE tour_id = ?',
-        { raw: true, replacements: [tourId]})
-        .then(records => {
-            resolve(records)
-        })
-        .catch(err => {
-            reject(err)
-        })
-    })
-}
+const fetchTourByTourId = function(tourId) {
+  // repo
+  return new Promise((resolve, reject) => {
+    db.sequelize
+      .query("SELECT * FROM tour WHERE tour_id = ?", {
+        raw: true,
+        replacements: [tourId]
+      })
+      .then(records => {
+        resolve(records);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
 const fetchTour = function(req, res) {
-    fetchTourByTourId( req.query.tourId )
+  // handler
+  fetchTourByTourId(req.query.tourId)
     .then(result => {
-        return res.json(result)
+      return res.json(result);
     })
     .catch(err => {
-        return res.render('error', {
-            error: err, 
-            status: 500
-        });
-    })
-}
+      return res.render("error", {
+        error: err,
+        status: 500
+      });
+    });
+};
 ///////////////////////////////////////
-const fetchToursByAppId = function(appId){
-    return new Promise((resolve,reject) => {
-        db.sequelize.query('SELECT * FROM tour WHERE app_id = ?',
-        { raw: true, replacements: [appId]})
-        .then(records => {
-            resolve(records)
-        })
-        .catch(err => {
-            reject(err)
-        })
-    })
-}
+const fetchToursByAppId = function(appId) {
+  // repo
+  return new Promise((resolve, reject) => {
+    db.sequelize
+      .query("SELECT * FROM tour WHERE app_id = ?", {
+        raw: true,
+        replacements: [appId]
+      })
+      .then(records => {
+        resolve(records);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
 
 const fetchTours = function(req, res) {
-    fetchToursByAppId( req.query.appId )
+  // handler
+  fetchToursByAppId(req.query.appId)
     .then(result => {
-        return res.json(result)
+      return res.json(result);
     })
     .catch(err => {
-        return res.render('error', {
-            error: err, 
-            status: 500
-        });
+      return res.render("error", {
+        error: err,
+        status: 500
+      });
+    });
+};
+////////////////////////////
+const insertRecordInDb = function(tour_name, app_id, steps) {
+  // repo
+  return new Promise((resolve, reject) => {
+    db.sequelize
+      .query(
+        `INSERT INTO public.tour
+        (tour_name, app_id, created_on, steps)
+        VALUES(?, ?, current_timestamp, ?
+        );`,
+        { raw: true, replacements: [tour_name, app_id, JSON.stringify(steps)] }
+      )
+      .then(records => {
+        resolve(records);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+const insertRecord = function(req, res) {
+  // handler
+  let { tour_name, app_id, steps } = req.body;
+  console.log(tour_name, app_id, steps)
+  insertRecordInDb(tour_name, app_id, steps)
+    .then(result => {
+      console.log(
+        `insert tour Successful with data ${tour_name} ${app_id} ${JSON.stringify(
+          steps
+        )}`
+      );
+      return res.status(200);
     })
-}
+    .catch(err => {
+      return res.render("error", {
+        error: err,
+        status: 500
+      });
+    });
+};
 
 module.exports = {
-    fetchTourByTourId,
-    fetchTour,
-    fetchToursByAppId,
-    fetchTours
-}
+  fetchTourByTourId,
+  fetchTour,
+  fetchToursByAppId,
+  fetchTours,
+  insertRecordInDb,
+  insertRecord
+};

@@ -50,7 +50,7 @@
 .grid-container-main {
   width: 90%;
   display: grid;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   text-align: left;
   left: 7%;
   position: relative;
@@ -83,7 +83,7 @@
 }
 .grid-item-opt{
   color: #0099ff;
-  font-size: 15px;
+  font-size: 18px;
   padding: 10px;
 }
 .tour-opt-text{

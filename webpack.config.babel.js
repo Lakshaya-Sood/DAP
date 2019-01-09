@@ -5,8 +5,8 @@ const { VueLoaderPlugin } = require('vue-loader');
 export default {
     entry: path.join(__dirname, 'src/VueK/index.js'),
     output: {
-        path: path.join(__dirname, 'dist'),
-        filename: '[name].bundle.js'
+        path: path.join(__dirname, 'staticServerBucket'),
+        filename: 'library.js'
     },
     module: {
         rules: [{
