@@ -84,20 +84,19 @@ const insertRecordInDb = function(tour_name, app_id, steps) {
 const insertRecord = function(req, res) {
   // handler
   let { tour_name, app_id, steps } = req.body;
-  console.log(tour_name, app_id, steps)
   insertRecordInDb(tour_name, app_id, steps)
     .then(result => {
-      console.log(
-        `insert tour Successful with data ${tour_name} ${app_id} ${JSON.stringify(
-          steps
-        )}`
-      );
-      return res.status(200);
+      console.log(result);
+      res.status(200);
+      res.json({
+        status: "done"
+      });
     })
     .catch(err => {
-      return res.render("error", {
-        error: err,
-        status: 500
+      console.log(err);
+      res.status(500);
+      res.json({
+        status: "fail"
       });
     });
 };

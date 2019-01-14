@@ -1,4 +1,4 @@
-var FETCH_CONFIG_URL = 'http://localhost:7777/90cf4642-2f52-41b3-aebd-f46eacc2bfc5/config.js';
+var FETCH_CONFIG_URL = 'http://localhost:3000/90cf4642-2f52-41b3-aebd-f46eacc2bfc5/config.js';
         function script(url) {
             return new Promise(function( resolve, reject ){
                 var s = document.createElement('script');

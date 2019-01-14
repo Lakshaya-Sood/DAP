@@ -1,5 +1,5 @@
 const serverConst = {
-    STATIC_FILE_SERVER_URL: 'http://localhost:7777',
+    STATIC_FILE_SERVER_URL: 'http://localhost:3000',
     parentPath: '../staticServerBucket/',
     indexjsPath: '/index.js',
     configjsPath: '/config.js',

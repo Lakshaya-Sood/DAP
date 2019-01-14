@@ -7,12 +7,13 @@ function receiveMessage(event){
     // debugger;
     // if (event.origin !== origin)
     //     return;
+    debugger;
+    console.log(event.data);
     openRecorderIframe(event.data);
     // sendDataToRecorder(event.data);
 }
 
 function openRecorderIframe(data) {
-    debugger;
     var iframe = document.createElement('iframe');
     iframe.style.display = "none";
     iframe.id = "recorder-iframe";

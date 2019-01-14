@@ -124,106 +124,12 @@ var x = {
     fetchData: function fetchData() {
       return new Promise(function (resolve, reject) {
         if (window && window.appConfig && window.appConfig.tours) {
-          //resolve( window.appConfig.tours )
-          resolve([{
-            "tour_id": "25e2bd55-f0f4-4eeb-a960-833c5ec04788",
-            "tour_name": "First Tour",
-            "tour_created_on": "2018-10-13T10:12:56.076Z"
-          }, {
-            "tour_id": "ce8a03ea-306b-47ef-8f55-66bf5e3b7f86",
-            "tour_name": "Second Tour",
-            "tour_created_on": "2018-09-13T10:12:54.076Z"
-          }, {
-            "tour_id": "c2ec0119-37fe-493a-9faf-b2205368d247",
-            "tour_name": "Third Tour",
-            "tour_created_on": "2018-11-13T10:12:52.076Z"
-          }]);
+          resolve(window.appConfig.tours); //resolve( [{"tour_id":"25e2bd55-f0f4-4eeb-a960-833c5ec04788","tour_name":"First Tour","tour_created_on":"2018-10-13T10:12:56.076Z"},{"tour_id":"ce8a03ea-306b-47ef-8f55-66bf5e3b7f86","tour_name":"Second Tour","tour_created_on":"2018-09-13T10:12:54.076Z"},{"tour_id":"c2ec0119-37fe-493a-9faf-b2205368d247","tour_name":"Third Tour","tour_created_on":"2018-11-13T10:12:52.076Z"}] )
         } else {
-          resolve([{
-            "tour_id": "25e2bd55-f0f4-4eeb-a960-833c5ec04788",
-            "tour_name": "First Tour",
-            "tour_created_on": "2018-10-13T10:12:56.076Z"
-          }, {
-            "tour_id": "ce8a03ea-306b-47ef-8f55-66bf5e3b7f86",
-            "tour_name": "Second Tour",
-            "tour_created_on": "2018-09-13T10:12:54.076Z"
-          }, {
-            "tour_id": "c2ec0119-37fe-493a-9faf-b2205368d247",
-            "tour_name": "Third Tour",
-            "tour_created_on": "2018-11-13T10:12:52.076Z"
-          }, {
-            "tour_id": "25e2bd55-f0f4-4eeb-a960-833c5ec04788",
-            "tour_name": "First Tour",
-            "tour_created_on": "2018-10-13T10:12:56.076Z"
-          }, {
-            "tour_id": "ce8a03ea-306b-47ef-8f55-66bf5e3b7f86",
-            "tour_name": "Second Tour",
-            "tour_created_on": "2018-09-13T10:12:54.076Z"
-          }, {
-            "tour_id": "c2ec0119-37fe-493a-9faf-b2205368d247",
-            "tour_name": "Third Tour",
-            "tour_created_on": "2018-11-13T10:12:52.076Z"
-          }, {
-            "tour_id": "25e2bd55-f0f4-4eeb-a960-833c5ec04788",
-            "tour_name": "First Tour",
-            "tour_created_on": "2018-10-13T10:12:56.076Z"
-          }, {
-            "tour_id": "ce8a03ea-306b-47ef-8f55-66bf5e3b7f86",
-            "tour_name": "Second Tour",
-            "tour_created_on": "2018-09-13T10:12:54.076Z"
-          }, {
-            "tour_id": "c2ec0119-37fe-493a-9faf-b2205368d247",
-            "tour_name": "Third Tour",
-            "tour_created_on": "2018-11-13T10:12:52.076Z"
-          }, {
-            "tour_id": "25e2bd55-f0f4-4eeb-a960-833c5ec04788",
-            "tour_name": "First Tour",
-            "tour_created_on": "2018-10-13T10:12:56.076Z"
-          }, {
-            "tour_id": "ce8a03ea-306b-47ef-8f55-66bf5e3b7f86",
-            "tour_name": "Second Tour",
-            "tour_created_on": "2018-09-13T10:12:54.076Z"
-          }, {
-            "tour_id": "c2ec0119-37fe-493a-9faf-b2205368d247",
-            "tour_name": "Third Tour",
-            "tour_created_on": "2018-11-13T10:12:52.076Z"
-          }, {
-            "tour_id": "25e2bd55-f0f4-4eeb-a960-833c5ec04788",
-            "tour_name": "First Tour",
-            "tour_created_on": "2018-10-13T10:12:56.076Z"
-          }, {
-            "tour_id": "ce8a03ea-306b-47ef-8f55-66bf5e3b7f86",
-            "tour_name": "Second Tour",
-            "tour_created_on": "2018-09-13T10:12:54.076Z"
-          }, {
-            "tour_id": "c2ec0119-37fe-493a-9faf-b2205368d247",
-            "tour_name": "Third Tour",
-            "tour_created_on": "2018-11-13T10:12:52.076Z"
-          }, {
-            "tour_id": "25e2bd55-f0f4-4eeb-a960-833c5ec04788",
-            "tour_name": "First Tour",
-            "tour_created_on": "2018-10-13T10:12:56.076Z"
-          }, {
-            "tour_id": "ce8a03ea-306b-47ef-8f55-66bf5e3b7f86",
-            "tour_name": "Second Tour",
-            "tour_created_on": "2018-09-13T10:12:54.076Z"
-          }, {
-            "tour_id": "c2ec0119-37fe-493a-9faf-b2205368d247",
-            "tour_name": "Third Tour",
-            "tour_created_on": "2018-11-13T10:12:52.076Z"
-          }, {
-            "tour_id": "25e2bd55-f0f4-4eeb-a960-833c5ec04788",
-            "tour_name": "First Tour",
-            "tour_created_on": "2018-10-13T10:12:56.076Z"
-          }, {
-            "tour_id": "ce8a03ea-306b-47ef-8f55-66bf5e3b7f86",
-            "tour_name": "Second Tour",
-            "tour_created_on": "2018-09-13T10:12:54.076Z"
-          }, {
-            "tour_id": "c2ec0119-37fe-493a-9faf-b2205368d247",
-            "tour_name": "Third Tour",
-            "tour_created_on": "2018-11-13T10:12:52.076Z"
-          }]); //reject('tour not find in window object')
+          //resolve( [{"tour_id":"25e2bd55-f0f4-4eeb-a960-833c5ec04788","tour_name":"First Tour","tour_created_on":"2018-10-13T10:12:56.076Z"},{"tour_id":"ce8a03ea-306b-47ef-8f55-66bf5e3b7f86","tour_name":"Second Tour","tour_created_on":"2018-09-13T10:12:54.076Z"},{"tour_id":"c2ec0119-37fe-493a-9faf-b2205368d247","tour_name":"Third Tour","tour_created_on":"2018-11-13T10:12:52.076Z"},{"tour_id":"25e2bd55-f0f4-4eeb-a960-833c5ec04788","tour_name":"First Tour","tour_created_on":"2018-10-13T10:12:56.076Z"},{"tour_id":"ce8a03ea-306b-47ef-8f55-66bf5e3b7f86","tour_name":"Second Tour","tour_created_on":"2018-09-13T10:12:54.076Z"},{"tour_id":"c2ec0119-37fe-493a-9faf-b2205368d247","tour_name":"Third Tour","tour_created_on":"2018-11-13T10:12:52.076Z"},{"tour_id":"25e2bd55-f0f4-4eeb-a960-833c5ec04788","tour_name":"First Tour","tour_created_on":"2018-10-13T10:12:56.076Z"},{"tour_id":"ce8a03ea-306b-47ef-8f55-66bf5e3b7f86","tour_name":"Second Tour","tour_created_on":"2018-09-13T10:12:54.076Z"},{"tour_id":"c2ec0119-37fe-493a-9faf-b2205368d247","tour_name":"Third Tour","tour_created_on":"2018-11-13T10:12:52.076Z"},
+          //{"tour_id":"25e2bd55-f0f4-4eeb-a960-833c5ec04788","tour_name":"First Tour","tour_created_on":"2018-10-13T10:12:56.076Z"},{"tour_id":"ce8a03ea-306b-47ef-8f55-66bf5e3b7f86","tour_name":"Second Tour","tour_created_on":"2018-09-13T10:12:54.076Z"},{"tour_id":"c2ec0119-37fe-493a-9faf-b2205368d247","tour_name":"Third Tour","tour_created_on":"2018-11-13T10:12:52.076Z"},{"tour_id":"25e2bd55-f0f4-4eeb-a960-833c5ec04788","tour_name":"First Tour","tour_created_on":"2018-10-13T10:12:56.076Z"},{"tour_id":"ce8a03ea-306b-47ef-8f55-66bf5e3b7f86","tour_name":"Second Tour","tour_created_on":"2018-09-13T10:12:54.076Z"},{"tour_id":"c2ec0119-37fe-493a-9faf-b2205368d247","tour_name":"Third Tour","tour_created_on":"2018-11-13T10:12:52.076Z"},{"tour_id":"25e2bd55-f0f4-4eeb-a960-833c5ec04788","tour_name":"First Tour","tour_created_on":"2018-10-13T10:12:56.076Z"},{"tour_id":"ce8a03ea-306b-47ef-8f55-66bf5e3b7f86","tour_name":"Second Tour","tour_created_on":"2018-09-13T10:12:54.076Z"},{"tour_id":"c2ec0119-37fe-493a-9faf-b2205368d247","tour_name":"Third Tour","tour_created_on":"2018-11-13T10:12:52.076Z"},
+          //{"tour_id":"25e2bd55-f0f4-4eeb-a960-833c5ec04788","tour_name":"First Tour","tour_created_on":"2018-10-13T10:12:56.076Z"},{"tour_id":"ce8a03ea-306b-47ef-8f55-66bf5e3b7f86","tour_name":"Second Tour","tour_created_on":"2018-09-13T10:12:54.076Z"},{"tour_id":"c2ec0119-37fe-493a-9faf-b2205368d247","tour_name":"Third Tour","tour_created_on":"2018-11-13T10:12:52.076Z"}] )
+          reject('tour not find in window object');
         }
       });
     }
@@ -27582,33 +27488,14 @@ function () {
   _createClass(Tour, [{
     key: "start",
     value: function start(name, stepDefURI) {
-      hopscotch__WEBPACK_IMPORTED_MODULE_0___default.a.startTour({
-        "id": "secondTour",
-        "steps": [{
-          "target": "header",
-          "placement": "bottom",
-          "title": "Heading",
-          "content": "Heading of our application"
-        }, {
-          "target": "aurora",
-          "placement": "right",
-          "title": "Aurora Northen Lights Image",
-          "content": "Can be seen in the high-latitude regions."
-        }, {
-          "target": "good_morning",
-          "placement": "bottom",
-          "title": "Good Morning",
-          "content": "Expressing good wishes on meeting or parting during the morning."
-        }]
-      }); // script(`${window.appConfig.rootFolderLink}tour.${stepDefURI}.js`)
-      // .then(() => {
-      //     console.log(`step defination for tour: ${name} is successfully fecthed. Filename: tour.${stepDefURI}.js`)
-      //     //this.stepData = window[stepDefURI];
-      //     hopscotch.startTour(window[stepDefURI]);
-      // })
-      // .catch((err) => {
-      //     console.log('Error occured: ',err)
-      // })
+      //hopscotch.startTour({"id":"secondTour","steps":[{"target":"header","placement":"bottom","title":"Heading","content":"Heading of our application"},{"target":"aurora","placement":"right","title":"Aurora Northen Lights Image","content":"Can be seen in the high-latitude regions."},{"target":"good_morning","placement":"bottom","title":"Good Morning","content":"Expressing good wishes on meeting or parting during the morning."}]})
+      script("".concat(window.appConfig.rootFolderLink, "tour.").concat(stepDefURI, ".js")).then(function () {
+        console.log("step defination for tour: ".concat(name, " is successfully fecthed. Filename: tour.").concat(stepDefURI, ".js")); //this.stepData = window[stepDefURI];
+
+        hopscotch__WEBPACK_IMPORTED_MODULE_0___default.a.startTour(window[stepDefURI]);
+      }).catch(function (err) {
+        console.log('Error occured: ', err);
+      });
     }
   }, {
     key: "stop",

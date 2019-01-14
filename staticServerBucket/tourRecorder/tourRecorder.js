@@ -189,7 +189,9 @@
             </div>
             <div v-if="showTourGeneratorForm" style="margin-top:15px;padding:8px;">
                 <div>
-                    <input type="text" style="
+                    <input type="text"
+                        v-model="tourName"
+                        style="
                         width:100%;
                         height:40px;
                         padding:8px;
@@ -288,6 +290,7 @@
         var app = new Vue({
             el: '#tour-recorder-container',
             data: {
+                tourName: '',
                 title: '',
                 description: '',
                 currentSelectedXPath: null,
@@ -331,10 +334,11 @@
                     var protocol = location.protocol;
                     var slashes = protocol.concat("//");
                     var origin = slashes.concat(window.location.hostname);
-                    debugger;
-                    window.frames['dap-tour-recorder-iframe'].postMessage(
-                        this.tourDetails,
-                        origin
+                    window.frames['dap-tour-recorder-iframe'].postMessage({
+                            tour_name: this.tourName,
+                            app_id: "90cf4642-2f52-41b3-aebd-f46eacc2bfc5",
+                            steps: this.tourDetails
+                        },origin
                     );
                 },
                 handleElementSelect: function(ev){
