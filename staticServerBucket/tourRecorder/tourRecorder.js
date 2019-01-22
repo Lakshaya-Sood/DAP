@@ -1,6 +1,6 @@
 (function () {
-    
-    var addEmptyIFrame = function() {
+
+    var addEmptyIFrame = function () {
         var iframe = document.createElement('iframe');
         iframe.style.display = "none";
         iframe.id = "dap-tour-recorder-iframe";
@@ -9,15 +9,15 @@
         addScriptsToHiddenIframe();
     };
 
-    var addScriptsToHiddenIframe = function() {
+    var addScriptsToHiddenIframe = function () {
         var iframeHead = window.frames['dap-tour-recorder-iframe'].document
-        .getElementsByTagName("head")[0];
+            .getElementsByTagName("head")[0];
         var myScript = document.createElement("script");
         myScript.src = "http://localhost:3000/tourRecorder/tourRecorderIframe.js";
         iframeHead.appendChild(myScript);
     };
 
-    var addStyles = function() {
+    var addStyles = function () {
         var node = document.createElement('style');
         var css = `
             .tour-recorder-active-element {
@@ -154,28 +154,28 @@
         document.body.appendChild(node);
     }
 
-    var injectVueScript = function() {
+    var injectVueScript = function () {
         var myScript = document.createElement("script");
         myScript.src = "https://cdn.jsdelivr.net/npm/vue";
-        myScript.onload = function() {
+        myScript.onload = function () {
             renderTourRecorderTemplate();
         };
         document.head.appendChild(myScript);
     };
 
-    var injectPopper = function() {
+    var injectPopper = function () {
         var myScript = document.createElement("script");
         myScript.src = "https://unpkg.com/popper.js/dist/umd/popper.min.js";
         document.head.appendChild(myScript);
     };
 
-    var injectXPathFinder = function() {
+    var injectXPathFinder = function () {
         var myScript = document.createElement("script");
         myScript.src = "http://localhost:3000/tourRecorder/elementXPath.js";
         document.head.appendChild(myScript);
     };
 
-    var tourRecorderForm = function() {
+    var tourRecorderForm = function () {
         return `
         <div>
             <div style="height:40px;line-height:40px;
@@ -208,7 +208,7 @@
         `;
     };
 
-    var tourRecordingPanel = function() {
+    var tourRecordingPanel = function () {
         return `
             <div style="background:white;height:100%">
                 <div style="width:100%;height:40px;padding:8px;
@@ -230,7 +230,7 @@
         `;
     };
 
-    var stepInformationBubble = function() {
+    var stepInformationBubble = function () {
         return `
             <div id="tour-step-info-bubble"
                 class="popper"
@@ -266,7 +266,7 @@
         `
     };
 
-    var renderTourRecorderTemplate = function() {
+    var renderTourRecorderTemplate = function () {
         var markUp = `
             <div id="tour-recorder-container">
                 <div id="recording-panel">
@@ -299,10 +299,10 @@
                 tourDetails: []
             },
             methods: {
-                createNewTour: function() {
+                createNewTour: function () {
                     this.showTourGeneratorForm = true;
                 },
-                isDescendant: function(parent, child) {
+                isDescendant: function (parent, child) {
                     var node = child.parentNode;
                     while (node != null) {
                         if (node == parent) {
@@ -312,11 +312,11 @@
                     }
                     return false;
                 },
-                destroyPopper: function() {
+                destroyPopper: function () {
                     this.title = ''; this.description = '';
                     this.popperInstance.destroy();
                 },
-                addNewStep: function(e) {
+                addNewStep: function (e) {
                     e.preventDefault();
                     var stepDefinition = {
                         title: this.title,
@@ -330,18 +330,21 @@
                     this.title = ''; this.description = '';
                     this.popperInstance.destroy();
                 },
-                submitTour: function() {
+                submitTour: function () {
                     var protocol = location.protocol;
                     var slashes = protocol.concat("//");
                     var origin = slashes.concat(window.location.hostname);
                     window.frames['dap-tour-recorder-iframe'].postMessage({
-                            tour_name: this.tourName,
-                            app_id: "90cf4642-2f52-41b3-aebd-f46eacc2bfc5",
+                        tour_name: this.tourName,
+                        app_id: "fe4a95df-aeb0-4c2c-b318-404aa5b9bf19",
+                        steps: {
+                            id: this.tourName.replace(/\s/g,''),
                             steps: this.tourDetails
-                        },origin
+                        }
+                    }, origin
                     );
                 },
-                handleElementSelect: function(ev){
+                handleElementSelect: function (ev) {
                     ev.preventDefault();
                     ev.stopPropagation();
                     var reference = ev.target;
@@ -349,7 +352,7 @@
                     var panel = document.querySelector('#tour-recorder-container');
                     var isReferenceChildOfPanel = this.isDescendant(panel, reference);
                     var isReferenceChildOfPopper = this.isDescendant(popper, reference);
-                    if(isReferenceChildOfPanel || isReferenceChildOfPopper) {
+                    if (isReferenceChildOfPanel || isReferenceChildOfPopper) {
                         return;
                     }
                     this.popperInstance = new Popper(reference, popper, {
@@ -364,26 +367,26 @@
                     });
                     this.currentSelectedXPath = this.getElementXPath(ev.target);
                 },
-                handleElementHover: function(ev){
+                handleElementHover: function (ev) {
                     var element = ev.target;
                     var className = "tour-recorder-active-element";
-                    var arr = element.className ? element.className.split(" "):[];
+                    var arr = element.className ? element.className.split(" ") : [];
                     if (arr.indexOf(className) == -1) {
                         element.className += " " + className;
                     }
                 },
-                handleElementMouseOut: function(ev){
+                handleElementMouseOut: function (ev) {
                     var element = ev.target;
                     element.className = element.className.replace(/\btour-recorder-active-element\b/g, "");
                 },
-                startRecording: function(ev) {
+                startRecording: function (ev) {
                     this.tourRecording = true;
                     ev.stopPropagation();
                     document.addEventListener('click', this.handleElementSelect);
                     document.addEventListener('mouseover', this.handleElementHover);
                     document.addEventListener('mouseout', this.handleElementMouseOut);
                 },
-                abortRecording: function(ev) {
+                abortRecording: function (ev) {
                     ev.stopPropagation();
                     this.tourRecording = false;
                     this.showTourGeneratorForm = false;
@@ -391,11 +394,34 @@
                     document.removeEventListener('mouseover', this.handleElementHover);
                     document.removeEventListener('mouseout', this.handleElementMouseOut);
                 },
-                getElementXPath: function(element) {
-                    return getElementXpath(element);
+                getElementXPath: function (el) {
+                    // TODO: use better code to select element's path
+                    if (!(el instanceof Element))
+                        return;
+                    var path = [];
+                    while (el.nodeType === Node.ELEMENT_NODE) {
+                        var selector = el.nodeName.toLowerCase();
+                        if (el.id) {
+                            selector += '#' + el.id;
+                            path.unshift(selector);
+                            break;
+                        } else {
+                            var sib = el, nth = 1;
+                            while (sib = sib.previousElementSibling) {
+                                if (sib.nodeName.toLowerCase() == selector)
+                                    nth++;
+                            }
+                            if (nth != 1)
+                                selector += ":nth-of-type(" + nth + ")";
+                        }
+                        path.unshift(selector);
+                        el = el.parentNode;
+                    }
+                    return path.join(" > ");
+                    // return getElementXpath(element);
                 }
             }
-          });
+        });
     };
 
     injectXPathFinder();
