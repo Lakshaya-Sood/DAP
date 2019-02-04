@@ -1,11 +1,10 @@
 window.addEventListener("message", receiveMessage, false);
 
 var origin = '';
-var target = null;
+var sender = null;
 function receiveMessage(event) {
-  console.log(event);
   origin = event.origin;
-  target = event.target;
+  sender = event.source;
   fetch("/tour", {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     headers: {
@@ -17,7 +16,6 @@ function receiveMessage(event) {
     .then(response => response.json())
     .then(
       () => {
-        console.log("done");
         fetch("/publish", {
           method: "POST", // *GET, POST, PUT, DELETE, etc.
           headers: {
@@ -40,9 +38,12 @@ function receiveMessage(event) {
     );
 }
 
-function sendDataToParent(data) {
-  debugger;
-  target.postMessage(
-    {data: 'data'}
+function sendDataToParent(res) {
+  sender.postMessage(
+    {
+      notifyParent: true,
+      result: res
+    },
+    origin
   )
 }

@@ -1,5 +1,6 @@
 window.addEventListener("message", receiveMessage, false);
 
+var origin;
 function receiveMessage(event){
     // var protocol = location.protocol;
     // var slashes = protocol.concat("//");
@@ -7,10 +8,22 @@ function receiveMessage(event){
     // debugger;
     // if (event.origin !== origin)
     //     return;
-    debugger;
-    console.log(event.data);
-    openRecorderIframe(event.data);
-    // sendDataToRecorder(event.data);
+    var data = event.data;
+    if(data.notifyParent) {
+        clearRecorderIframe();
+        window.parent.postMessage(
+            data.result,
+            origin
+        );
+    } else{
+        origin = event.origin;
+        openRecorderIframe(event.data);
+    }
+}
+
+function clearRecorderIframe() {
+    var frame = document.getElementById('recorder-iframe');
+    frame.parentNode.removeChild(frame);
 }
 
 function openRecorderIframe(data) {

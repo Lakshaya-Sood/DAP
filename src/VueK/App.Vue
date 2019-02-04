@@ -104,4 +104,8 @@
       font-size: 13px;
       cursor: pointer;
     }
+
+    div.hopscotch-bubble .hopscotch-bubble-number {
+      background: transparent url(http://localhost:3000/public/icons/sprite-green.png) 0 0 no-repeat !important;
+    }
 </style>

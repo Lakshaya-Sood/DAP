@@ -215,16 +215,30 @@
                     background:#1591f7;text-align:center">
                     <h2 style="color:white">Recording</h3>                    
                 </div>
-                <div style="width:50%;box-sizing:border-box;float:left;padding:8px">
-                    <button style="width:100%;height:40px;border:none;
-                        background:red;color:white"
-                        v-on:click="abortRecording">Abort</button>
+                <div v-if="!tourSubmitResponse">
+                    <div style="width:50%;box-sizing:border-box;float:left;padding:8px">
+                        <button style="width:100%;height:40px;border:none;
+                            background:red;color:white"
+                            v-on:click="abortRecording">Abort</button>
+                    </div>
+                    <div style="width:50%;box-sizing:border-box;float:left;padding:8px">
+                        <button
+                            v-on:click="submitTour"
+                            style="width:100%;height:40px;border:none;
+                            background:green;color:white">Done</button>
+                    </div>
                 </div>
-                <div style="width:50%;box-sizing:border-box;float:left;padding:8px">
-                    <button
-                        v-on:click="submitTour"
-                        style="width:100%;height:40px;border:none;
-                        background:green;color:white">Done</button>
+                <div v-if="tourSubmitResponse" style="padding:10px">
+                    <div style="margin-bottom:15px">
+                        <strong>
+                            copy the code below and paste it in your applcation: 
+                        </strong>
+                    </div>
+                    <div style="font-family:monospace;background:#ccc">
+                        <code>
+                            {{tourScriptCode}}
+                        </code>
+                    </div>
                 </div>
             </div>
         `;
@@ -271,12 +285,12 @@
             <div id="tour-recorder-container">
                 <div id="recording-panel">
                     <div v-if="!tourRecording"
-                        style="height:500px;width:300px;top:0;right:0;position:fixed;
+                        style="height:500px;width:330px;top:0;right:0;position:fixed;
                         box-shadow: -2px 4px 8px grey;z-index:999999999999;background:white">
                         ${tourRecorderForm()}
                     </div>
                     <div v-if="tourRecording"
-                        style="width:300px;top:0;right:0;position:fixed;
+                        style="width:330px;top:0;right:0;position:fixed;
                             box-shadow: -2px 4px 8px grey;z-index:999999999999;background:white">
                             ${tourRecordingPanel()}
                     </div>
@@ -296,6 +310,8 @@
                 currentSelectedXPath: null,
                 showTourGeneratorForm: false,
                 tourRecording: false,
+                tourSubmitResponse: null,
+                tourScriptCode: '',
                 tourDetails: []
             },
             methods: {
@@ -334,6 +350,8 @@
                     var protocol = location.protocol;
                     var slashes = protocol.concat("//");
                     var origin = slashes.concat(window.location.hostname);
+                    this.tourSubmitResponse = null;
+                    var self = this;
                     window.frames['dap-tour-recorder-iframe'].postMessage({
                         tour_name: this.tourName,
                         app_id: "fe4a95df-aeb0-4c2c-b318-404aa5b9bf19",
@@ -343,6 +361,21 @@
                         }
                     }, origin
                     );
+                    window.addEventListener('message', this.handleSubmitResponse, false);
+                },
+                handleSubmitResponse: function(event) {
+                    this.tourSubmitResponse = event.data;
+                    this.tourScriptCode =
+                        `<script>
+                            var s = document.createElement('script');
+                            s.type = 'text/javascript';
+                            s.async = true;
+                            s.src = "${this.tourSubmitResponse.path}";
+                            s.onload = function() { console.log("index loaded"); };
+                            s.onerror = function(err) { console.log("index not loaded",err); };
+                            var x = document.getElementsByTagName('script')[0];
+                            x.parentNode.insertBefore(s, x);
+                        </script>`
                 },
                 handleElementSelect: function (ev) {
                     ev.preventDefault();

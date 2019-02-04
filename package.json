@@ -44,6 +44,7 @@
     "webpack-cli": "^3.0.3"
   },
   "dependencies": {
+    "artyom.js": "^1.0.6",
     "hopscotch": "^0.3.1",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
